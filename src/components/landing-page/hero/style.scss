@@ -1,0 +1,56 @@
+.hero__section {
+	height: 100vh;
+	position: relative;
+
+	.hero__img {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+		filter: brightness(0.7);
+	}
+
+	.hero__content {
+		position: absolute;
+		bottom: 2rem;
+		left: 2rem;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.hero__description {
+		width: 58%;
+
+		h1 {
+			font-family: 'Inter';
+			font-size: 3.4rem;
+			color: white;
+		}
+
+		p {
+			color: white;
+         margin-bottom: 1rem;
+		}
+
+		button {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+         background-color: transparent;
+         border: 1px solid white;
+         padding: .6rem 1.7rem;
+         font-size: 1.1rem;
+         cursor: pointer;
+         font-weight: bold;
+         gap: .5rem;
+         color: white;
+
+			img {
+				width: 2rem;
+            filter: invert(1) brightness(200);
+            position: relative;
+            top: .1rem;
+			}
+		}
+	}
+}

@@ -1,0 +1,39 @@
+.note__template {
+	border-radius: 1.2rem;
+	display: flex;
+	align-items: center;
+	border: 1px solid #bcbcbc;
+	font-size: 0.9rem;
+	height: 2.25rem;
+	padding: 0 0.8rem 0;
+	gap: 0.3rem;
+
+	span {
+		$size: 1.3rem;
+		width: $size;
+		height: $size;
+		border-radius: 50%;
+		background-image: linear-gradient(135deg, #abdcff 10%, #0396ff 100%);
+	}
+
+	img {
+		width: 1rem;
+	}
+}
+
+.section__style {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	margin-right: auto;
+	border: 1px solid #bcbcbc;
+	border-radius: 1.2rem;
+	height: 2.25rem;
+	padding: 0 1rem .1rem;
+	font-size: 0.9rem;
+
+	img {
+		width: 1rem;
+	}
+}

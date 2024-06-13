@@ -1,0 +1,77 @@
+.dashboard__layout .side__bar {
+   display: flex;
+   flex-direction: column;
+
+   .user__info {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      margin: 2rem  0;
+
+      h2 {
+         font-size: 1.1rem;
+         font-family: "Montserrat";
+         margin-top: .5rem;
+
+      }
+
+      p {
+         font-size: .8rem;
+         color: gray;
+      }
+
+
+      img {
+         $size: 4rem;
+         height: $size;
+         width: $size;
+         border-radius: 50%;
+         object-fit: cover;
+      }
+   }
+
+   .user__image {
+      position: relative;
+
+
+      .online__indicator {
+         $size: 1rem;
+         width: 1rem;
+         height: 1rem;
+         border-radius: 50%;
+         background-color: green;
+         position: absolute;
+         bottom: 0;
+         right: 0;
+      }
+
+   }
+
+   .logout__container {
+     margin-top: auto;
+     border-top: 1px solid #bababa81;
+   }
+
+   .sidebar__item {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .8rem 0 .8rem 1.5rem;
+      text-decoration: none;
+      color: gray;
+      &:hover {
+         background-color: gainsboro;
+      }
+
+
+      img {
+         width: 1.7rem;
+      }
+
+      h2 {
+         font-size: .95rem;
+         font-weight: 500;
+      }
+   }
+}
