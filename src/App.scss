@@ -1,0 +1,23 @@
+* {
+   $theme: #F5C3C3;
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: "Segoe UI";
+}
+
+@font-face {
+   font-family: "Poppins-B";
+   src: url("/fonts/Poppins-Bold.ttf");
+}
+
+@font-face {
+   font-family: "Inter";
+   src: url("/fonts/Inter.ttf");
+}
+
+
+@font-face {
+   font-family: "Montserrat";
+   src: url("/fonts/Montserrat.ttf");
+}
