@@ -1,9 +1,14 @@
 import { create } from 'zustand';
 
 export type UserProps = {
-	name: string;
+	username: string;
 	email: string;
+	type: string;
 	password: string;
+	_id: string;
+	createdAt: string;
+	updatedAt: string;
+	__v: number;
 };
 
 interface CurrentUserState {
@@ -15,7 +20,7 @@ interface CurrentUserState {
 
 const initialState = {
 	currentUser: {
-		name: 'Anioke Sebastian',
+		username: 'Anioke Sebastian',
 		email: 'aniokechukwudi8@gmail.com',
 	},
 	sideBar: false,

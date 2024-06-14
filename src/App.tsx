@@ -7,6 +7,8 @@ import DashboardLayout from './pages/dashboard/DashboardLayout';
 import Overview from './pages/overview/Overview';
 import NewRecord from './pages/new-record/NewRecord';
 import RecordsPage from './pages/records-page/RecordsPage';
+import { Fragment } from 'react/jsx-runtime';
+import { Toaster } from 'react-hot-toast';
 
 const router = createBrowserRouter([
 	{
@@ -44,7 +46,13 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-	return <RouterProvider router={router} />;
+	return (
+		<Fragment>
+			<Toaster />
+			<RouterProvider router={router} />
+		</Fragment>
+	)
+	;
 }
 
 export default App;
