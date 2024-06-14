@@ -58,8 +58,8 @@ function Register() {
     }
   };
 
-  const handelSubmit = async (e:React.FormEvent) => {
-	e.preventDefault()
+  const handelSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setLoading(true);
     try {
       const resp = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/signup`, {
@@ -74,14 +74,13 @@ function Register() {
         }),
       });
 
-
       const result = (await resp.json()) as RegistrationResponse;
       setCurrentUser(result.data);
-		showToast.success("Successfully Registered")
-		navigate("/dashboard")
+      showToast.success("Successfully Registered");
+      navigate("/dashboard");
     } catch (error) {
       if (error instanceof Error) {
-			console.log(error.message)
+        console.log(error.message);
         showToast.error(error.message);
       }
     } finally {
@@ -89,11 +88,15 @@ function Register() {
     }
   };
 
+  const handleCancel = () => {
+    navigate("/");
+  };
+
   return (
     <Fragment>
-      <div className="auth__cover" onClick={() => navigate("/")} />
+      <div className="auth__cover" onClick={handleCancel} />
       <div className="auth__modal">
-        <button className="cancel__btn">
+        <button className="cancel__btn" onClick={handleCancel}>
           <img src="/icons/cancel.svg" alt="" />
         </button>
         <div className="logo__container">

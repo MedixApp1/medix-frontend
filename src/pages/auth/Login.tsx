@@ -6,23 +6,24 @@ import { useSearchParams, Link } from "react-router-dom";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import showToast from "../../utils/showToast";
 import Loader from "../../components/shared/loader/Loader";
+import handleGoogleAuth from "../../firebase/firebase.google";
+import { FirebaseError } from "firebase/app";
 
 interface LoginResponse {
-	success: boolean;
-	data: {
-	  _id: string;
-	  username: string;
-	  email: string;
-	  type: string;
-	  password: string;
-	  createdAt: string;
-	  updatedAt: string;
-	  __v: number;
-	  accessToken: string;
-	};
-	message: string;
- }
-
+  success: boolean;
+  data: {
+    _id: string;
+    username: string;
+    email: string;
+    type: string;
+    password: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+    accessToken: string;
+  };
+  message: string;
+}
 
 function Login() {
   const navigate = useNavigate();
@@ -79,11 +80,41 @@ function Login() {
       setLoading(false);
     }
   };
+
+  const loginWithGoogle = async () => {
+    setLoading(true);
+    try {
+      const userDetails = await handleGoogleAuth();
+      const resp = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...userDetails,
+          username: userDetails?.displayName,
+          type: "google",
+        }),
+      });
+      const result = (await resp.json()) as LoginResponse;
+		console.log(result)
+      setCurrentUser(result.data);
+      navigate("/dashboard");
+      showToast.success("Welcome Back");
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        console.log(error.message);
+        showToast.error(error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <Fragment>
       <div className="auth__cover" onClick={handleClick} />
       <div className="auth__modal">
-        <button className="cancel__btn">
+        <button className="cancel__btn" onClick={handleClick}>
           <img src="/icons/cancel.svg" alt="" />
         </button>
         <div className="logo__container">
@@ -114,14 +145,17 @@ function Login() {
             We use industry-standard encryption techniques to protect your
             password and other sensitive information.
           </label>
-          <button className="submit__btn"> {loading? <Loader /> : "Submit"}</button>
+          <button className="submit__btn">
+            {" "}
+            {loading ? <Loader /> : "Submit"}
+          </button>
 
           <div className="social">
             <div className="social__text">
               <p>Social Login</p>
               <span className="hr__line" />
             </div>
-            <button>
+            <button onClick={loginWithGoogle} type="button">
               <img src="/icons/goggle.svg" alt="" />
               <p>Continue with Google</p>
             </button>
