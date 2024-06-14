@@ -24,7 +24,7 @@ function SideBar() {
 					<img src="/images/no-profile.jpg" alt="" />
 					<span className='online__indicator' />
 				</div>
-				<h2>{currentUser?.name}</h2>
+				<h2>{currentUser?.username}</h2>
 				<p>{currentUser?.email}</p>
 			</div>
 			<SidebarItem
