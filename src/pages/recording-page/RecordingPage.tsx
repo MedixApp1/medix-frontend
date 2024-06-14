@@ -61,7 +61,7 @@ function RecordingPage() {
       <div className="record__data">
         <div className="tabs">
           <p className="active">Transcript</p>
-          
+          <p>Note</p>
         </div>
       
       </div>
