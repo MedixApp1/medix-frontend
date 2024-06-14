@@ -63,9 +63,7 @@ function RecordingPage() {
           <p className="active">Transcript</p>
           <p>Note</p>
         </div>
-        <div>
-
-        </div>
+      
       </div>
     </div>
   );
