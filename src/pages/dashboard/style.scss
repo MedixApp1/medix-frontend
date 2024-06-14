@@ -19,9 +19,9 @@
 	.side__bar {
 		grid-column: 1/2;
 		grid-row: 2/3;
-		z-index: 1;
-		background-color: $bg;
-      backdrop-filter: blur(10px);
+		z-index: 1;		
+		background-color: #ffffffe1;
+      backdrop-filter: blur(2px);
       border-right: 1px solid #bababa81;
 	}
 

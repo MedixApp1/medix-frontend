@@ -97,6 +97,11 @@ function Login() {
         }),
       });
       const result = (await resp.json()) as LoginResponse;
+
+		if(!resp.ok){
+			console.log(result)
+			throw new Error(result.message)
+		}
 		console.log(result)
       setCurrentUser(result.data);
       navigate("/dashboard");

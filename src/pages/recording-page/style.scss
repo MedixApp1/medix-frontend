@@ -1,0 +1,55 @@
+.recording__page {
+   display: flex;
+   justify-content: space-between; 
+   height: 100%;
+   background-color: #ffffffe1;
+
+   .record__visual {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      bottom: 10%;
+      width: 40%;
+      img {
+         width: 10em;
+         margin: 0 auto;
+      }
+      p {
+         font-family: "Montserrat";
+         text-align: center;
+         font-weight: bolder;
+      }
+   }
+
+   .record__data {
+      width: 60%;
+      border-left: 1px solid #bebebe;
+      .tabs {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         text-align: center;
+         border-bottom: 1px solid #bebebe;
+         
+         p{
+            padding: 1.5rem 0;
+            width: 100%;
+            font-family: "Inter";
+            font-size: .8rem;
+
+            &.active {
+               border-bottom: 2px solid #7092ff;
+            }
+         }
+         
+
+      }
+   }
+}
+
+
+.audio__indicator {
+   display: flex;
+   justify-content: center;
+}

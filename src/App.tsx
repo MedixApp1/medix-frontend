@@ -9,6 +9,7 @@ import NewRecord from './pages/new-record/NewRecord';
 import RecordsPage from './pages/records-page/RecordsPage';
 import { Fragment } from 'react/jsx-runtime';
 import { Toaster } from 'react-hot-toast';
+import RecordingPage from './pages/recording-page/RecordingPage';
 
 const router = createBrowserRouter([
 	{
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
 			{
 				path: "/dashboard/records",
 				element: <RecordsPage />
+			},
+			{
+				path: "/dashboard/recording",
+				element: <RecordingPage />
 			}
 		]
 	}

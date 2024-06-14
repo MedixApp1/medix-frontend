@@ -1,9 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import NoteTemplate from '../../components/dashboard/selectors/NoteTemplate';
 import SectionStyle from '../../components/dashboard/selectors/SectionStyle';
 import './style.scss';
 import { Fragment } from 'react/jsx-runtime';
 
 function NewRecord() {
+	const navigate = useNavigate();
 	return (
 		<Fragment>
 			<div className="record__modal">
@@ -13,8 +15,8 @@ function NewRecord() {
 					<p>Record in realtime or upload audio file</p>
 					<span>Audio file must not exceed 50mb</span>
 					<div className="btn__container">
-						<button>Upload audio</button>
-						<button>Record audio</button>
+						<button onClick={()=> navigate("/dashboard/recording")}>Upload audio</button>
+						<button onClick={()=> navigate("/dashboard/recording")}>Record audio</button>
 					</div>
 				</div>
 				<div className="result__settings">

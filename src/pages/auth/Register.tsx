@@ -73,8 +73,13 @@ function Register() {
           password: newUser.password,
         }),
       });
+		const result = (await resp.json()) as RegistrationResponse;
 
-      const result = (await resp.json()) as RegistrationResponse;
+		if(!resp.ok){
+			console.log(result)
+			throw new Error(result.message)
+		}
+
       setCurrentUser(result.data);
       showToast.success("Successfully Registered");
       navigate("/dashboard");
