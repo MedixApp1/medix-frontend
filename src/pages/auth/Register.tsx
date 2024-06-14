@@ -74,8 +74,10 @@ function Register() {
         }),
       });
 
+
       const result = (await resp.json()) as RegistrationResponse;
       setCurrentUser(result.data);
+		showToast.success("Successfully Registered")
 		navigate("/dashboard")
     } catch (error) {
       if (error instanceof Error) {
@@ -142,7 +144,7 @@ function Register() {
             {loading ? <Loader /> : "Submit"}
           </button>
           <label className="policy__label" htmlFor="policy">
-            Already have an account ? <Link to="/register">SIGN IN</Link>
+            Already have an account ? <Link to="/login">SIGN IN</Link>
           </label>
         </form>
       </div>
