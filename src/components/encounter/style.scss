@@ -1,0 +1,71 @@
+.encounter__card {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 0.5rem;
+  height: 10rem;
+  background-color: #ffffffe3;
+  gap: 1rem;
+  width: 80%;
+  margin: 0 auto 1.4rem;
+  padding: 0.7rem 0.8rem;
+  backdrop-filter: blur(3px);
+
+  .title {
+    font-size: 1.2rem;
+    font-family: "Inter";
+    margin-bottom: 0.5rem;
+  }
+
+  .image {
+    background: radial-gradient(circle at 60% 40%, #6b9be9 25%, transparent 26%),
+      radial-gradient(circle at 40% 60%, #6b9be980 25%, transparent 26%);
+    background-size: 2em 2em;
+    opacity: 1;
+    width: 30rem;
+    height: 100%;
+  }
+
+  .details {
+    padding: 0.7rem 0;
+  }
+
+  .description {
+    font-size: 0.9rem;
+    height: 2.7rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: gray;
+  }
+
+  .tags {
+    display: flex;
+    gap: 0.6rem;
+    margin: 1rem 0;
+
+    p {
+      background-color: whitesmoke;
+
+      border-radius: 0.9rem;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.8rem;
+    }
+  }
+
+  .others {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   img {
+      width: 1rem;
+      margin-left: auto;
+   }
+   .time {
+      margin-top: auto;
+   }
+
+   span {
+      font-size: .7rem;
+      color: gray;
+   }
+  }
+}
