@@ -134,7 +134,7 @@
 
 @media screen and (max-width: 900px) {
 	.reviews__section {
-		padding: 0 1rem;
+		padding: 1.7rem 1rem;
 
 		& > h2 {
 			font-size: 1.9rem;
@@ -151,13 +151,20 @@
 
 		.review__card__container {
 			padding-left: 0.5rem;
+			margin-top: 0rem;
 
 			.review__card {
 				width: 16rem;
 				font-size: 0.9rem;
+			border: 1px solid #877c775b;
 
+
+				& > h2 {
+					font-size: 1rem;
+				}
 				& > p {
-					font-size: 0.85rem;
+					font-size: 0.8rem;
+					line-height: 1.5;
 				}
 			}
 		}

@@ -6,20 +6,25 @@
    
   img {
    width: 2rem;
+   filter: invert(.5);
   }
 
   .socials {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: .4rem;
+    gap: .8rem;
     margin: .6rem 0 3rem;
-  }
-
-  .copyright {
+    font-size: .8rem;
+    color: #a0a0a0;
+    }
+    
+    .copyright {
+    color: #a0a0a0;
     padding: 1.1rem 0 ;
-    border-top: 1px solid gray;
+    border-top: 1px solid #ccccccb7;
     text-align: center;
     width: 100%;
+    font-size: .8rem;
   }
 }

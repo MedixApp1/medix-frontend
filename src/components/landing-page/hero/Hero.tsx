@@ -5,7 +5,7 @@ function Hero() {
   const navigate = useNavigate();
 
   return (
-    <section className="hero__section">
+    <section id="home" className="hero__section">
       <img className="hero__img" src="/images/hero.jpg" alt="" />
       <div className="hero__content">
          <div className="hero__description">

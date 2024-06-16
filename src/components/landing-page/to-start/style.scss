@@ -1,7 +1,7 @@
 .to__start {
    width: 90%;
    margin: 0 auto 4rem;
-   border: 1px solid gray;
+   border: 1px solid #a3a3a3e3;
    padding: 6rem 0 4rem;
    border-radius: 1.5rem 1.5rem 0 0;
    background-color: #ececec;
@@ -13,9 +13,12 @@
       font-weight: 500;
    }
 
-   button {
+   a {
       margin: 2rem auto;
       display: block;
+      width: fit-content;
+      text-decoration: none;
+      color: #2c2c2c;
       padding: .7rem 3.3rem;
       border: 1px solid #847974;
       font-weight: 500;

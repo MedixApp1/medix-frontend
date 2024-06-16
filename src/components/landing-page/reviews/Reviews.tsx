@@ -23,7 +23,7 @@ function Reviews() {
 		);
 	};
 	return (
-		<section className="reviews__section">
+		<section id='reviews' className="reviews__section">
 			<h2>Reviews</h2>
 			<p>
 				Feel free to share your thoughts, suggestions, and experiences with
