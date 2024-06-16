@@ -146,7 +146,7 @@ function Login() {
             value={formalUser.password}
             required
           />
-          <label className="policy__label" htmlFor="policy">
+          <label className="policy__label login__policy" htmlFor="policy">
             We use industry-standard encryption techniques to protect your
             password and other sensitive information.
           </label>

@@ -25,7 +25,7 @@ interface RegistrationResponse {
 function Register() {
   const [searchParam, setSearchParam] = useSearchParams();
   const { setCurrentUser } = useCurrentUser();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [newUser, setNewUser] = useState({
     name: searchParam.get("name") ?? "",
     email: searchParam.get("email") ?? "",
@@ -137,6 +137,7 @@ function Register() {
             eyeicon
             required
           />
+          <div className="policy__container">
           <input
             type="radio"
             className="policy"
@@ -148,6 +149,8 @@ function Register() {
             By opening an account you agree to the terms and conditions of our{" "}
             <Link to="/">privacy policy</Link>
           </label>
+
+          </div>
           <button className="submit__btn">
             {loading ? <Loader /> : "Submit"}
           </button>
