@@ -1,6 +1,8 @@
 .dashboard__layout .side__bar {
    display: flex;
    flex-direction: column;
+   transform: translateX(0%);
+   transition: transform .5s ease;
 
    .user__info {
       display: flex;
@@ -72,6 +74,15 @@
       h2 {
          font-size: .95rem;
          font-weight: 500;
+      }
+   }
+}
+
+@media screen and (max-width: 900px) {
+   .dashboard__layout .side__bar {
+      &.hide__sidebar {
+         transform: translateX(-100%);
+         
       }
    }
 }

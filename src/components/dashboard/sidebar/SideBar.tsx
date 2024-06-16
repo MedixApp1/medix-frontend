@@ -11,11 +11,10 @@ function SideBar() {
   const sideBarState = useCurrentUser((state) => state.sideBar);
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(false);
-  const [isPresent, setIsPresent] = useState(false);
-  const handlePresentChange = () => {
-    setIsPresent(!isPresent);
-  };
+  const {sideBar} = useCurrentUser();
+
+
+ 
 
   const handleNavLinkClick = () => {
     setSideBar(false);
@@ -27,7 +26,7 @@ function SideBar() {
     navigate("/login", { replace: true });
   };
   return (
-    <nav className="side__bar">
+    <nav className={`side__bar ${!sideBar && "hide__sidebar"}`}>
       <div className="user__info">
         <div className="user__image">
           <img src="/images/no-profile.jpg" alt="" />
@@ -36,12 +35,6 @@ function SideBar() {
         <h2>{currentUser?.username}</h2>
         <p>{currentUser?.email}</p>
       </div>
-      <Toogle
-        isAttending={isPresent}
-        loading={loading}
-        handleChange={handlePresentChange}
-        id="28"
-      />
       <SidebarItem
         link="/dashboard/"
         icon="/icons/dashboard.svg"

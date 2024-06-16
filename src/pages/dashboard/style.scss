@@ -44,3 +44,17 @@
 		filter: blur(6px) saturate(0%) opacity(0.5);
 	}
 }
+
+@media screen and (max-width:900px) {
+	.dashboard__layout {
+		grid-template-columns: 100%;
+
+		.side__bar {
+			position: absolute;
+			top: 0;
+			width: 75%;
+			left: 0;
+			height: 82.2vh;
+		}
+	}
+}
