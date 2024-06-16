@@ -19,6 +19,7 @@ function SideBar() {
   const handleNavLinkClick = () => {
     setSideBar(false);
   };
+  console.log(currentUser)
 
   const handleLogOut = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();

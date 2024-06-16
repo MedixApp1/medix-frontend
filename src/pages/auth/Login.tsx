@@ -8,8 +8,10 @@ import showToast from "../../utils/showToast";
 import Loader from "../../components/shared/loader/Loader";
 import handleGoogleAuth from "../../firebase/firebase.google";
 import { FirebaseError } from "firebase/app";
+import Cookie from "js-cookie";
 
-interface LoginResponse {
+
+export interface LoginResponse {
   success: boolean;
   data: {
     _id: string;
@@ -68,7 +70,13 @@ function Login() {
       });
 
       const result = (await resp.json()) as LoginResponse;
-      setCurrentUser(result.data);
+      Cookie.set("doctor-token", result.data.accessToken, {
+        expires: 1,
+        secure: true,
+        sameSite: 'strict',
+        })
+        console.log(result)
+        setCurrentUser(result.data);
       showToast.success("Login Successful");
       navigate("/dashboard");
     } catch (error) {
@@ -111,7 +119,7 @@ function Login() {
         console.log(error.message);
         showToast.error(error.message);
       }
-      
+
     } finally {
       setLoading(false);
     }

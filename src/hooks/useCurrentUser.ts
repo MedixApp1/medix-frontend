@@ -19,10 +19,7 @@ interface CurrentUserState {
 }
 
 const initialState = {
-	currentUser: {
-		username: 'Anioke Sebastian',
-		email: 'aniokechukwudi8@gmail.com',
-	},
+	currentUser: null,
 	sideBar: false,
 };
 

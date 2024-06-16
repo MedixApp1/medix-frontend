@@ -55,6 +55,11 @@
 			width: 75%;
 			left: 0;
 			height: 82.2vh;
+			z-index: 7;
+		}
+
+		.dashboard__outlet {
+			grid-column: 1/-1;
 		}
 	}
 }

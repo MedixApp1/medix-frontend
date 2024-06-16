@@ -13,20 +13,18 @@
 
   &.scrolled {
     background-color: white;
-	 box-shadow: 0 .7rem 1.5rem #6e6e6e1d;
+    box-shadow: 0 0.7rem 1.5rem #6e6e6e1d;
 
     .logo__container {
       filter: invert(0.5);
     }
     & > .links a {
       color: #878787;
-		}
-		
-		& > a {
-		 background-color: #b9b9b9;
+    }
 
-	
-	 }
+    & > a {
+      background-color: #b9b9b9;
+    }
   }
 
   .logo__container {
@@ -97,17 +95,16 @@
       filter: brightness(200);
     }
   }
-
-  }
-    .menu__btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: transparent;
-      border: none;
-      opacity: 0.6;
-      display: none;
-    }
+}
+.menu__btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  opacity: 0.6;
+  display: none;
+}
 
 @media screen and (max-width: 900px) {
   .top__nav {
@@ -156,21 +153,21 @@
     & > a {
       display: none;
     }
+  }
+  .menu__btn {
+    $size: 2.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.55rem;
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    background-color: #b5b5b5;
+
+    img {
+      width: 100%;
+      filter: invert(1) brightness(200);
     }
-      .menu__btn {
-        $size: 2.2rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0.55rem;
-        width: $size;
-        height: $size;
-        border-radius: 50%;
-        background-color: #b5b5b5;
-  
-        img {
-          width: 100%;
-          filter: invert(1) brightness(200);
-        }
-      }
+  }
 }
