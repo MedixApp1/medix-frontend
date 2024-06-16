@@ -1,15 +1,55 @@
-.dashboard__layout .top__nav {
-   img {
-      width: 1.4rem;
-   }
-   h1 {
-      font-family: "Montserrat";
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: grey;
-   }
+.dash__nav {
+  height: 10vh;
+  width: 100vw;
+  position: fixed;
+  left: 0;
+  top: 0%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2.5rem;
 
-   .action {
-      
+  .logo__container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 0.1rem;
+
+   p {
+     font-family: "Inter";
+     font-size: 0.95rem;
+   }
+   img {
+     width: 2rem;
+   //   filter: brightness(50);
+     margin-right: 0.3rem;
+   }
+ }
+  img {
+    width: 1.4rem;
+  }
+  h1 {
+    font-family: "Montserrat";
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: grey;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+
+}
+
+@media screen and (max-width: 900px) {
+   .dash__nav {
+      padding: 0 1rem;
+      h1{
+         display: none;
+      }
+      .toogle__button {
+         display: none;
+      }
    }
 }

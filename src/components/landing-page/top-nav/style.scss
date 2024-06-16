@@ -98,16 +98,16 @@
     }
   }
 
-  .menu__btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
-    border: none;
-    opacity: 0.6;
-    display: none;
   }
-}
+    .menu__btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: transparent;
+      border: none;
+      opacity: 0.6;
+      display: none;
+    }
 
 @media screen and (max-width: 900px) {
   .top__nav {
@@ -156,21 +156,21 @@
     & > a {
       display: none;
     }
-    .menu__btn {
-      $size: 2.2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0.55rem;
-      width: $size;
-      height: $size;
-      border-radius: 50%;
-      background-color: #b5b5b5;
-
-      img {
-        width: 100%;
-        filter: invert(1) brightness(200);
-      }
     }
-  }
+      .menu__btn {
+        $size: 2.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.55rem;
+        width: $size;
+        height: $size;
+        border-radius: 50%;
+        background-color: #b5b5b5;
+  
+        img {
+          width: 100%;
+          filter: invert(1) brightness(200);
+        }
+      }
 }
