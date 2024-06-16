@@ -6,7 +6,7 @@ function Hero() {
 
   return (
     <section className="hero__section">
-      <img className="hero__img" src="/hero-img.jpg" alt="" />
+      <img className="hero__img" src="/images/hero.jpg" alt="" />
       <div className="hero__content">
          <div className="hero__description">
             <h1>Empowering Doctors with Artificial Intelligence</h1>

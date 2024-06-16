@@ -6,109 +6,57 @@ function Features() {
 			<span className="small">Features</span>
 			<h3>Our Amazing Features</h3>
 			<p className="sub__text">
-				From customizable categories to synchronized accessibility
-				across devices, our todo app empowers you to stay organized,
+				From genration of doctors note to synchronized accessibility
+				across devices, our app empowers doctors to stay organized,
 				focused, and in control of your daily agenda.
 			</p>
 			<div className="features__first">
 				<div className="feature">
 					<img
-						src="/icons/features/category.svg"
+						src="/icons/features/doctor-note.svg"
 						alt="category"
 					/>
-					<h4>Custom Categories</h4>
+					<h4>Doctors Note</h4>
 					<p>
-						Intelligent categorization that organizes tasks based on
-						priority and completion status. Ensures a streamlined
-						view of your todos for effective management.
+					Automatically generate draft clinical notes based on the doctor's conversational inputs and the patient's electronic health record data. This can save physicians significant time compared to manually typing out notes.
 					</p>
-					<a className="learn__more">
-						Learn More{" "}
-						<img
-							src="/icons/features/arrow_right.svg"
-							alt=""
-						/>
-					</a>
 				</div>
 				<div className="feature">
 					<img
-						src="/icons/features/list.svg"
+						src="/icons/features/patient.svg"
 						alt="list"
 					/>
-					<h4>Due Date Reminders</h4>
+					<h4>Patient Instruction</h4>
 					<p>
-						{" "}
-						Set due dates for your tasks and receive timely
-						reminders, helping you stay on top of deadlines and
-						prioritize your work effectively.
+					It helps ensure patients receive clear guidance on medications, follow-up care, home treatment, warning signs to watch for, and educational information about their condition - all tailored to their specific situation. 
 					</p>
-					<a className="learn__more">
-						Learn More{" "}
-						<img
-							src="/icons/features/arrow_right.svg"
-							alt=""
-						/>
-					</a>
 				</div>
 				<div className="feature">
 					<img
-						src="/icons/features/sync.svg"
+						src="/icons/features/nlp.svg"
 						alt="sync"
 					/>
-					<h4>Sync Across Devices</h4>
+					<h4>Natural Language Processing</h4>
 					<p>
-						Synchronized data ensures that your todos are updated in
-						real-time across all your devices, providing a
-						consistent and reliable experience.
+					It utilizes advanced natural language processing (NLP) to understand the doctor's spoken words and extract relevant details to include in the note. This allows for a more natural and conversational interaction.
 					</p>
-					<a className="learn__more">
-						Learn More{" "}
-						<img
-							src="/icons/features/arrow_right.svg"
-							alt=""
-						/>
-					</a>
-				</div>
-				<div className="feature">
-					<img
-						src="/icons/features/attachment.svg"
-						alt="category"
-					/>
-					<h4>Notes and Attachments</h4>
-					<p>
-						Attach additional notes, documents, or relevant files to
-						tasks. Keep all necessary information in one place for a
-						comprehensive overview of each task..
-					</p>
-					<a className="learn__more">
-						Learn More{" "}
-						<img
-							src="/icons/features/arrow_right.svg"
-							alt=""
-						/>
-					</a>
 				</div>
 			</div>
 			<div className="features__second">
 				<div className="feature__collaborate">
 					<div className="feature__image__container">
 						<img
-							src="/icons/features/collaboration.jpg"
+							src="/images/specialty.jpg"
 							alt=""
 						/>
 					</div>
 					<div className="feature__details">
-						<span className="small">Collaborate</span>
+						<span className="small">Specialization Customization</span>
 						<h3>
-							Collaborative Task Management in TaskHub anytime,
-							anywhere.
+						Tailor Nabla Copilot for Your Medical Specialty.
 						</h3>
 						<p className="sub__text">
-							Collaborative capabilities enable users to share
-							tasks with team members or collaborators. This
-							shared visibility ensures that everyone involved in
-							a project has a clear understanding of the tasks at
-							hand, fostering transparency and alignment.
+						Nabla Copilot offers specialization capabilities that enable healthcare providers to fine-tune the app's note generation and documentation features to their specific medical domain. This customization ensures that the AI assistant aligns with the unique terminology, documentation requirements, and workflows of different clinical specialties.
 						</p>
 						<hr />
                   <div className="checks">
@@ -117,21 +65,21 @@ function Features() {
                            src="/icons/features/check.svg"
                            alt=""
                         />
-                        <p>Organize your data</p>
+                        <p>Enhance Accurace</p>
                      </div>
                      <div>
                         <img
                            src="/icons/features/check.svg"
                            alt=""
                         />
-                        <p>Always in sync</p>
+                        <p>Steamline Workflows</p>
                      </div>
                      <div>
                         <img
                            src="/icons/features/check.svg"
                            alt=""
                         />
-                        <p>Work with any team</p>
+                        <p>Stay Compliant</p>
                      </div>
                   </div>
 					</div>
@@ -140,29 +88,29 @@ function Features() {
             
 					<div className="feature__image__container">
 						<img
-							src="/icons/features/dashboard.jpg"
+							src="/images/note-gen.jpg"
 							alt=""
 						/>
 					</div>
                <div className="feature__details">
-						<span className="small">Collaborate</span>
+						<span className="small">Automated Documentation</span>
 						<h3>
-                  Effortlessly Manage All Your Task with Our Intuitive Dashboard.
+                  AI-Powered Clinical Note Generation 
 						</h3>
 						<p className="sub__text">
-                  The dashboard provides users with a quick, at-a-glance overview of their entire task landscape. Key information such as upcoming deadlines, task priorities, and overall completion status is presented in a visually digestible format.
+                  Nabla Copilot's automatic note generation functionality enables doctors to effortlessly create comprehensive draft notes by simply narrating the patient encounter details. Leveraging AI and voice recognition, the app intelligently captures the doctor's spoken inputs along with relevant data from the electronic health record to compose an initial draft documentation seamlessly.
 						</p>
 						<hr />
                   <div className="dashboard__checks">
                      <div>
                         <img src="/icons/features/world.svg" className="world" alt="" />
-                        <h4>Powerful Dashboard</h4>
-                        <p>Facilitates quick task creation and editing directly from the main view.</p>
+                        <h4>Patient-Centric Documentation</h4>
+                        <p> Generated note can be highly contextualized and tailored to each unique patient case.</p>
                      </div>
                      <div>
                         <img src="/icons/features/setting.svg" className="setting" alt="" />
-                        <h4>Customizable Widgets</h4>
-                        <p>Customizable dashboard with widgets that align with their specific needs.</p>
+                        <h4>Time-Saving Efficiency</h4>
+                        <p>Alleviates the burdensome task of manually typing out detailed notes after every patient visit.</p>
                      </div>
                   </div>
 					</div>

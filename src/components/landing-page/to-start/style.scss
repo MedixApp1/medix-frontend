@@ -2,15 +2,24 @@
    width: 90%;
    margin: 0 auto 4rem;
    border: 1px solid gray;
-   padding: 2rem 0;
+   padding: 6rem 0 4rem;
+   border-radius: 1.5rem 1.5rem 0 0;
+   background-color: #ececec;
 
    h1 {
-      font-size: 2.4rem;
+      font-size: 2.3rem;
       text-align: center;
+      font-family: "Manrope";
+      font-weight: 500;
    }
 
    button {
       margin: 2rem auto;
       display: block;
+      padding: .7rem 3.3rem;
+      border: 1px solid #847974;
+      font-weight: 500;
+      border-radius: 1.5rem;
+      background-color: #a8df87;
    }
 }

@@ -16,7 +16,7 @@ const ReviewCard = forwardRef(
 				<h2>{`"${title}"`}</h2>
 				<p>{comment}</p>
 				<div className="customer__details">
-					<img src={`/reviews/review-${index}.jpg`} alt="" />
+					<img src={`/images/reviews/review-${index}.jpg`} alt="" />
 					<div>
 						<h3>{name}</h3>
 						<p>{position}</p>

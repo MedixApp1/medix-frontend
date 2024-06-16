@@ -11,13 +11,11 @@ declare module "react-audio-visualize" {
     barWidth: number;
     gap: number;
     barColor: string;
-    // Add other props for AudioVisualizer component
   }
 
   interface LiveAudioVisualizerProps {
     mediaRecorder: MediaRecorder;
     width: number;
     height: number;
-    // Define props for LiveAudioVisualizer component
   }
 }
