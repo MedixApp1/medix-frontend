@@ -62,13 +62,28 @@
       padding: .8rem 0 .8rem 2.8rem;
       text-decoration: none;
       color: gray;
+
+      &.active__link {
+         background-color: #ededed;
+         position: relative;
+         &:before {
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            width: .25rem;
+            height: 100%;
+            background-color: #84afbb;
+         }
+      }
       &:hover {
-         background-color: gainsboro;
+         background-color: rgb(234, 234, 234);
       }
 
 
       img {
          width: 1.5rem;
+         filter: invert(.5);
       }
 
       h2 {
