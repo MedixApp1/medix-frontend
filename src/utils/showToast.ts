@@ -1,22 +1,22 @@
-import toast from "react-hot-toast";
+import toast, { ToastOptions } from "react-hot-toast";
 
 
 const showToast = {
-   message: (message: string)=> {
+   message: (message: string, opt?: ToastOptions)=> {
       toast.remove()
-      toast(message);
+      toast(message, opt);
    },
-   success: (message: string)=> {
+   success: (message: string, opt?: ToastOptions)=> {
       toast.remove()
-      toast.success(message);
+      toast.success(message, opt);
    },
-   error: (message: string)=> {
+   error: (message: string, opt?: ToastOptions)=> {
       toast.remove()
-      toast.error(message);
+      toast.error(message, opt);
    },
-   loading: (message: string)=> {
+   loading: (message: string, opt?: ToastOptions)=> {
       toast.remove()
-      toast.loading(message);
+      toast.loading(message, opt);
    }
 }
 
