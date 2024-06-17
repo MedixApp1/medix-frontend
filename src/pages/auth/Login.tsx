@@ -5,7 +5,7 @@ import { Fragment, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import showToast from "../../utils/showToast";
-import Loader from "../../components/shared/loader/Loader";
+import Loader from "../../components/shared/loader/circle-loader/Loader";
 import handleGoogleAuth from "../../firebase/firebase.google";
 import { FirebaseError } from "firebase/app";
 import Cookie from "js-cookie";
