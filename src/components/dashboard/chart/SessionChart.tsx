@@ -19,7 +19,7 @@ const SessionChart = () => {
 		const fontFamily = 'Ysabeau, sans-serif';
 
 		new Chart(ctx, {
-			type: 'line',
+			type: 'bar',
 			data: {
 				labels: [
 					'Day 1',
@@ -34,65 +34,23 @@ const SessionChart = () => {
 					{
 						label: 'Questions Answered',
 						data: [12, 19, 3, 17, 28, 24, 7],
-						fill: false,
-						borderColor: 'rgb(75, 192, 192)',
-						tension: 0.1,
+						backgroundColor: 'rgb(75, 192, 192)',
 						pointStyle: 'circle',
-						pointRadius: 10,
-						pointHoverRadius: 15,
-					},
-					{
-						label: 'Correct Answers',
-						data: [9, 10, 2, 17, 23, 24, 5],
-						fill: false,
-						borderColor: '#ff8989',
-						tension: 0.1,
-						pointStyle: 'circle',
-						pointRadius: 10,
-						pointHoverRadius: 15,
-					},
+					}
 				],
 			},
 			options: {
-				scales: {
-					y: {
-						beginAtZero: true,
-					},
-				},
+				responsive: true,
 				plugins: {
-					title: {
-						display: true,
-						text: 'Recent Activity', // Your desired title
-						align: 'start',
-						color: 'black',
-						font: {
-							family: "Inter",
-							size: 17, // Adjust the font size if needed
-							weight: 500, // Adjust the font weight if needed
-						},
-					},
-					legend: {
-						labels: {
-							font: {
-								family: 'Ysabeau, sans-serif',
-							},
-						},
-					},
-					tooltip: {
-						// tooltip options
-						titleFont: {
-							family: 'Ysabeau, sans-serif',
-						},
-						bodyFont: {
-							family: 'Ysabeau, sans-serif',
-						},
-					},
-				},
-				// Default font for the entire chart
-				font: {
-					family: 'Ysabeau, sans-serif',
-				},
-			},
+				  legend: {
+					 position: 'top',
+				  },
+				  title: {
+					 display: true,
+					 text: 'Total Patient Per Day'
+				  }
+				}
+			 },
 		});
 	};
 
