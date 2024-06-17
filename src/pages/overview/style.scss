@@ -7,12 +7,11 @@
    //  background-image: url("/images/welcome-bg-2.jpeg");
     background-size: cover;
     background-position: center;
-   //  color: white;
-    background-color: #ffffff8e;
+    background-color: white;
     backdrop-filter: blur(10px);
     border: 1px solid #bababa81;
 
-    padding: 2.5rem 1.2rem 3rem;
+    padding: 2.5rem 2.1rem 1rem;
     border-radius: 0.7rem;
 
     h4 {
@@ -23,8 +22,14 @@
     }
 
     p {
-      width: 73%;
+      width: 80%;
       font-size: 0.9rem;
+      color: #313131;
+      line-height: 1.4;
+    }
+
+    img {
+      width: 10rem;
     }
   }
 
