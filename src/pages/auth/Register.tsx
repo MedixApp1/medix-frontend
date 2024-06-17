@@ -5,7 +5,7 @@ import { Fragment, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import showToast from "../../utils/showToast";
 import useCurrentUser from "../../hooks/useCurrentUser";
-import Loader from "../../components/shared/loader/Loader";
+import Loader from "../../components/shared/loader/circle-loader/Loader";
 
 interface RegistrationResponse {
   success: boolean;
