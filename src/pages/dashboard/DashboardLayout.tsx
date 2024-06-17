@@ -7,11 +7,12 @@ import { useEffect, useState } from "react";
 import showToast from "../../utils/showToast";
 import { LoginResponse } from "../auth/Login";
 import useCurrentUser from "../../hooks/useCurrentUser";
+import Loader from "../../components/shared/loader/linear-loader/Loader";
 
 function DashboardLayout() {
   const token = Cookies.get("doctor-token");
   const [isLoading, setIsLoading] = useState(false);
-  console.log(token);
+
 
   const isAuthenticated = token !== undefined;
   const navigate = useNavigate();
@@ -27,15 +28,12 @@ function DashboardLayout() {
           "Authorization": `Bearer ${token}`,
         },
       });
-      console.log("I was checked");
       const result = (await resp.json()) as LoginResponse;
       if (!resp.ok) {
-        console.log("returned nothing");
         setIsLoading(false);
         navigate("/login");
         return showToast.error(result.message);
       }
-      console.log("result", result);
       setCurrentUser(result.data);
       showToast.success("User Successful");
       navigate("/dashboard");
@@ -58,7 +56,7 @@ function DashboardLayout() {
   }, []);
 
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return  <Loader />;
   }
 
   if (isAuthenticated && currentUser) {
