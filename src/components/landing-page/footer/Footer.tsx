@@ -9,7 +9,7 @@ function Footer() {
           <p>LinkedIn</p>
           <p>Twitter</p>
        </div>
-       <p className="copyright">&copy; {new Date().getFullYear()} All rights Reserved . StudyIQ</p>
+       <p className="copyright">&copy; {new Date().getFullYear()} All rights Reserved . Medix</p>
      </footer>
    )
  }
