@@ -10,6 +10,7 @@ import RecordsPage from './pages/records-page/RecordsPage';
 import { Fragment } from 'react/jsx-runtime';
 import { Toaster } from 'react-hot-toast';
 import RecordingPage from './pages/recording-page/RecordingPage';
+import EncounterOverview from './pages/encounter-overview/EncounterOverview';
 
 const router = createBrowserRouter([
 	{
@@ -32,7 +33,8 @@ const router = createBrowserRouter([
 		children: [
 			{
 				element: <Overview />,
-				index: true
+				index: true,
+				path: "/dashboard"
 			},
 			{
 				path: "/dashboard/new-record",
@@ -45,6 +47,10 @@ const router = createBrowserRouter([
 			{
 				path: "/dashboard/recording",
 				element: <RecordingPage />
+			},
+			{
+				path: "/dashboard/encounter-overview",
+				element: <EncounterOverview />
 			}
 		]
 	}
