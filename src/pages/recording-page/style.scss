@@ -3,13 +3,14 @@
    justify-content: space-between; 
    height: 100%;
    background-color: #ffffffe1;
+   overflow: hidden;
 
    .record__visual {
       display: flex;
       flex-direction: column;
       justify-content: center;
       position: relative;
-      bottom: 10%;
+      bottom: 5%;
       width: 40%;
       img {
          width: 8em;
@@ -19,6 +20,18 @@
          font-family: "Montserrat";
          text-align: center;
          font-weight: bolder;
+      }
+
+      button {
+         background-color: #c2c2c2;
+         background-color: rgb(128, 128, 128);
+         font-weight: bold;
+         color: white;
+         padding: .8rem 1.9rem;
+         width: fit-content;
+         border: none;
+         margin: 1rem auto;
+         border-radius: .4rem;
       }
    }
 
@@ -38,6 +51,7 @@
             font-family: "Inter";
             font-size: .8rem;
             cursor: pointer;
+            color: #316596;
 
             &:hover {
                background-color: white;
@@ -54,7 +68,9 @@
    }
 
    .tab__content {
-      padding: 1rem 1.9rem;
+      padding: 2rem 1.9rem 5rem;
+      overflow-y: auto;
+      height: 100%;
 
       font-family: "Inter";
    }
