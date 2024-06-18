@@ -6,6 +6,7 @@ export type EncounterType = {
 	transcript: string[];
 	note: NoteSection[];
 	instructions: string[];
+	appointemntId: string;
 };
 
 interface CurrentEncounterState {
