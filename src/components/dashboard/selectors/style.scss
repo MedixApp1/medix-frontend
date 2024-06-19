@@ -1,39 +1,98 @@
 .note__template {
-	border-radius: 1.2rem;
-	display: flex;
-	align-items: center;
-	border: 1px solid #bcbcbc;
-	font-size: 0.9rem;
-	height: 2.25rem;
-	padding: 0 0.8rem 0;
-	gap: 0.3rem;
+  border-radius: 1.2rem;
+  display: flex;
+  align-items: center;
+  border: 1px solid #bcbcbc;
+  font-size: 0.9rem;
+  height: 2.25rem;
+  width: 13rem;
+  padding: 0 0.8rem 0;
+  gap: 0.3rem;
+  cursor: pointer;
 
-	span {
-		$size: 1.3rem;
-		width: $size;
-		height: $size;
-		border-radius: 50%;
-		background-image: linear-gradient(135deg, #abdcff 10%, #0396ff 100%);
-	}
+  span {
+    $size: 1.3rem;
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    background-image: linear-gradient(135deg, #abdcff 10%, #0396ff 100%);
+  }
 
-	img {
-		width: 1rem;
-	}
+  img {
+    width: 1rem;
+	 margin-left: auto;
+  }
+}
+
+.template__wrapper {
+  position: relative;
+  .templates {
+    background-color: white;
+    position: absolute;
+    top: 100%;
+    padding: 1rem 0;
+    box-shadow: 0 0.6rem 1rem #4f4f4f57;
+    max-height: 9rem;
+	 overflow-y: auto;
+	 overflow-x: hidden;
+    border-radius: 0.9rem;
+	 width: 100%;
+
+    &::-webkit-scrollbar {
+      width: 0.7rem;
+      border-radius: 1rem;
+      background-color: #ffffff;
+      transform: translateX(-100%);
+
+      &:hover {
+        background-color: #f3f3f3;
+      }
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #777d8569;
+      border: 3px solid transparent;
+      border-radius: 1rem;
+      background-clip: content-box;
+    }
+    &::-webkit-scrollbar-button {
+      background-size: 70%;
+      background-repeat: no-repeat;
+      background-position: 51.8%;
+      height: 0.4rem;
+    }
+
+	
+
+
+    .note__template, .section__style {
+      border-radius: 0;
+      border: none;
+		padding: .5rem .8rem;
+		overflow: hidden;
+		gap: .4rem;
+      &:hover {
+        background-color: #ecf7ff;
+      }
+    }
+  }
 }
 
 .section__style {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 1rem;
-	margin-right: auto;
-	border: 1px solid #bcbcbc;
-	border-radius: 1.2rem;
-	height: 2.25rem;
-	padding: 0 1rem .1rem;
-	font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  margin-right: auto;
+  border: 1px solid #bcbcbc;
+  border-radius: 1.2rem;
+  height: 2.25rem;
+  padding: 0 1rem 0.1rem;
+  font-size: 0.9rem;
+  width: 9rem;
 
-	img {
-		width: 1rem;
-	}
+
+  img {
+    width: 1rem;
+  }
 }

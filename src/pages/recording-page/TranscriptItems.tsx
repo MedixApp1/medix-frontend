@@ -1,26 +1,14 @@
-import { msToTime } from "../../utils/msToTime";
+import useNewEncounter from "../../hooks/useNewEncounter";
 
-type TranscriptItem = {
-  id: string;
-  text: string;
-  speaker: string;
-  start_offset_ms: number;
-  end_offset_ms: number;
-  is_final: boolean;
-  object: string;
-};
-
-function TranscriptItems({
-  transcriptItems,
-}: {
-  transcriptItems: TranscriptItem[];
-}) {
+function TranscriptItems() {
+  const { currentEncounter } = useNewEncounter();
+  console.log(currentEncounter)
   return (
     <div>
-      {transcriptItems.map((item) => (
-        <div className="transcript__item">
-          <span className="time">{msToTime(item["start_offset_ms"])}</span>
-          <p className="text">{item["text"]}</p>
+      {currentEncounter?.transcript?.map((item, index) => (
+        <div key={index} className="transcript__item">
+          {/* <span className="time">{msToTime(item["start_offset_ms"])}</span> */}
+          <p className="text">{item}</p>
         </div>
       ))}
     </div>

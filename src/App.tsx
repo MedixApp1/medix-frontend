@@ -34,7 +34,6 @@ const router = createBrowserRouter([
 			{
 				element: <Overview />,
 				index: true,
-				path: "/dashboard"
 			},
 			{
 				path: "/dashboard/new-record",

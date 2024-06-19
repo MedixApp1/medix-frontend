@@ -25,7 +25,7 @@ interface RegistrationResponse {
 function Register() {
   const [searchParam, setSearchParam] = useSearchParams();
   const { setCurrentUser } = useCurrentUser();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [newUser, setNewUser] = useState({
     name: searchParam.get("name") ?? "",
     email: searchParam.get("email") ?? "",

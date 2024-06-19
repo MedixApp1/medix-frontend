@@ -1,5 +1,5 @@
 .dashboard__layout {
-   $bg: #ffffffe1;
+   $bg: #fff;
 	display: grid;
 	grid-template-columns: 20% 80%;
 	grid-template-rows: 10vh 90dvh;
@@ -20,7 +20,7 @@
 		grid-column: 1/2;
 		grid-row: 2/3;
 		z-index: 1;		
-		background-color: #ffffffe1;
+		background-color: #fcfcfce1;
       backdrop-filter: blur(2px);
       border-right: 1px solid #bababa81;
 	}
@@ -30,8 +30,9 @@
 		grid-row: 2/3;
 		z-index: 1;
       height: 90dvh;
-      overflow-y: scroll;
+      overflow-y: auto;
       position: relative;
+		background-color: #eeeeee;
 	}
 
 	.video__cover {
@@ -54,7 +55,7 @@
 			top: 0;
 			width: 75%;
 			left: 0;
-			height: 82.2vh;
+			height: 90vh;
 			z-index: 7;
 		}
 

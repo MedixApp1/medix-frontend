@@ -4,7 +4,7 @@
    height: 100%;
    background-color: #ffffffe1;
    overflow: hidden;
-
+   
    .record__visual {
       display: flex;
       flex-direction: column;
@@ -52,7 +52,7 @@
             font-size: .8rem;
             cursor: pointer;
             color: #316596;
-
+            
             &:hover {
                background-color: white;
             }
@@ -60,22 +60,23 @@
             &.active {
                background-color: whitesmoke;
                border-bottom: 2px solid #7092ff;
-            }
+               }
          }
          
 
       }
-   }
-
+      }
+      
    .tab__content {
       padding: 2rem 1.9rem 5rem;
       overflow-y: auto;
+      position: relative;
       height: 100%;
-
+      
       font-family: "Inter";
-   }
+      }
 
-   .transcript__item {
+      .transcript__item {
       font-family: "Inter";
       margin-bottom: 1rem;
       .time {
@@ -87,6 +88,22 @@
       .text {
          font-size: .9rem;
 
+      }
+   }
+
+   .loading__container {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+         position: relative;
+         bottom: 5rem;
       }
    }
 

@@ -53,10 +53,10 @@ function Features() {
 					<div className="feature__details">
 						<span className="small">Specialization Customization</span>
 						<h3>
-						Tailor Nabla Copilot for Your Medical Specialty.
+						Tailor Medix Copilot for Your Medical Specialty.
 						</h3>
 						<p className="sub__text">
-						Nabla Copilot offers specialization capabilities that enable healthcare providers to fine-tune the app's note generation and documentation features to their specific medical domain. This customization ensures that the AI assistant aligns with the unique terminology, documentation requirements, and workflows of different clinical specialties.
+						Medix offers specialization capabilities that enable healthcare providers to fine-tune the app's note generation and documentation features to their specific medical domain. This customization ensures that the AI assistant aligns with the unique terminology, documentation requirements, and workflows of different clinical specialties.
 						</p>
 						<hr />
                   <div className="checks">
@@ -98,7 +98,7 @@ function Features() {
                   AI-Powered Clinical Note Generation 
 						</h3>
 						<p className="sub__text">
-                  Nabla Copilot's automatic note generation functionality enables doctors to effortlessly create comprehensive draft notes by simply narrating the patient encounter details. Leveraging AI and voice recognition, the app intelligently captures the doctor's spoken inputs along with relevant data from the electronic health record to compose an initial draft documentation seamlessly.
+                  Medix  automatic note generation functionality enables doctors to effortlessly create comprehensive draft notes by simply narrating the patient encounter details. Leveraging AI and voice recognition, the app intelligently captures the doctor's spoken inputs along with relevant data from the electronic health record to compose an initial draft documentation seamlessly.
 						</p>
 						<hr />
                   <div className="dashboard__checks">

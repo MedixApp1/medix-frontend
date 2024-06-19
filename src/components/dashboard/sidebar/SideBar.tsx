@@ -37,7 +37,7 @@ function SideBar() {
         <p>{currentUser?.email}</p>
       </div>
       <SidebarItem
-        link="/dashboard/"
+        link="/dashboard"
         icon="/icons/dashboard.svg"
         title="Overview"
         handleClick={handleNavLinkClick}

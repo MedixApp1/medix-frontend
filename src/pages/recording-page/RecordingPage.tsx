@@ -5,6 +5,7 @@ import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 
 import TranscriptItems from "./TranscriptItems";
 import NoteItem from "./NoteItem";
+import useRealTimeTranscript from "../../hooks/useRealTimeTranscript";
 
 const obj = {
   id: "90656c3e-af12-41a0-bf1e-900dc70c9d2a",
@@ -55,10 +56,11 @@ const generatedNote = [
 
 const transcriptData = Array(7).fill(obj);
 
-function AudioIndicator() {
+function AudioIndicator({ mediaRecorder }: {mediaRecorder: MediaRecorder}) {
   const [blob, setBlob] = useState<Blob>();
   const recorder = useAudioRecorder();
   recorder.startRecording();
+  console.log(mediaRecorder)
 
   return (
     <div className="audio__indicator">
@@ -69,13 +71,12 @@ function AudioIndicator() {
         />
       </div>
 
-      {recorder.mediaRecorder && (
-        <LiveAudioVisualizer
-          mediaRecorder={recorder.mediaRecorder}
-          width={200}
-          height={75}
-        />
-      )}
+      <LiveAudioVisualizer
+        mediaRecorder={recorder.mediaRecorder}
+        width={200}
+        barColor="red"
+        height={75}
+      />
 
       {blob && (
         <AudioVisualizer
@@ -103,13 +104,17 @@ function AudioIndicator() {
 }
 
 function RecordingPage() {
+  const { startRecording, transcriptData: recordingData, mediaRecorder } =
+    useRealTimeTranscript();
   const [currentTab, setCurrentTab] = useState("transcript");
+  console.log(recordingData);
   return (
     <div className="recording__page">
       <div className="record__visual">
         <img src="/icons/mic.svg" alt="" />
-        <AudioIndicator />
+        {mediaRecorder && <AudioIndicator mediaRecorder={mediaRecorder} />}
         <p>00 : 23 : 21</p>
+        <button onClick={startRecording}>Start Recording</button>
       </div>
       <div className="record__data">
         <div className="tabs">
@@ -125,10 +130,16 @@ function RecordingPage() {
           >
             Note
           </p>
+          <p
+            className={currentTab === "instruction" ? "active" : ""}
+            onClick={() => setCurrentTab("instruction")}
+          >
+            Patient Instruction
+          </p>
         </div>
         <div className="tab__content">
           {currentTab == "transcript" ? (
-            <TranscriptItems transcriptItems={transcriptData} />
+            <TranscriptItems transcriptItems={recordingData} />
           ) : (
             <NoteItem note={generatedNote} />
           )}

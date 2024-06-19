@@ -1,12 +1,6 @@
 <svg viewBox="-6.96 -6.96 37.92 37.92" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-     <linearGradient id="myGradient" x1="0%" y1="50%" x2="100%" y2="50%" gradientTransform="rotate(62)">
-      <stop offset="0%" stop-color="#8EC5FC" />
-      <stop offset="100%" stop-color="#E0C3FC" />
-    </linearGradient>
-  </defs>
   <g id="SVGRepo_bgCarrier" stroke-width="0">
-    <rect x="-6.96" y="-6.96" width="37.92" height="37.92" rx="18.96" fill="url(#myGradient)" strokewidth="0"></rect>
+    <rect x="-6.96" y="-6.96" width="37.92" height="37.92" rx="18.96" fill="gray" strokewidth="0"></rect>
   </g>
   <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
   <g id="SVGRepo_iconCarrier">
