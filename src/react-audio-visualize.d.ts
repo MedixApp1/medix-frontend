@@ -14,8 +14,9 @@ declare module "react-audio-visualize" {
   }
 
   interface LiveAudioVisualizerProps {
-    mediaRecorder: MediaRecorder;
+    mediaRecorder: MediaRecorder | undefined;
     width: number;
+    barColor?: string
     height: number;
   }
 }

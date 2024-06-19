@@ -139,9 +139,9 @@ function RecordingPage() {
         </div>
         <div className="tab__content">
           {currentTab == "transcript" ? (
-            <TranscriptItems transcriptItems={recordingData} />
+            <TranscriptItems  />
           ) : (
-            <NoteItem note={generatedNote} />
+            <NoteItem  />
           )}
         </div>
       </div>
