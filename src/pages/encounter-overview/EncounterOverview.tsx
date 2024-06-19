@@ -63,10 +63,12 @@ import PatientInstructions from "../../components/dashboard/patient-instructions
 function AudioIndicator() {
   const [blob, setBlob] = useState<Blob>();
   const recorder = useAudioRecorder();
+  const {currentEncounter} = useNewEncounter();
   // recorder.startRecording();
 
   return (
     <div className="audio__indicator">
+      <audio src=""></audio>
       <div style={{ display: "none" }}>
         <AudioRecorder
           onRecordingComplete={setBlob}
@@ -134,6 +136,7 @@ function EncounterOverview() {
     <div className="recording__page">
       <div className="record__visual">
         <img src="/icons/mic.svg" alt="" />
+
         <AudioIndicator />
         <p>00 : 23 : 21</p>
         <button onClick={startRecording}>Play Recording</button>
