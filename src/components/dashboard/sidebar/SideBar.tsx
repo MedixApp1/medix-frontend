@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import SidebarItem from "./SidebarItem";
 import useCurrentUser from "../../../hooks/useCurrentUser";
 import "./style.scss";
+import showToast from "../../../utils/showToast";
+import Cookies from "js-cookie";
 
 function SideBar() {
   const setSideBar = useCurrentUser((state) => state.setSideBar);
@@ -21,7 +23,8 @@ function SideBar() {
 
   const handleLogOut = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    // showToast.success('Signed Out');
+    Cookies.remove("doctor-token");
+    showToast.success('Signed Out');
     navigate("/login", { replace: true });
   };
   return (

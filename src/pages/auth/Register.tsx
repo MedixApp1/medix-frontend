@@ -6,6 +6,7 @@ import { useSearchParams } from "react-router-dom";
 import showToast from "../../utils/showToast";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import Loader from "../../components/shared/loader/circle-loader/Loader";
+import Cookies from "js-cookie";
 
 interface RegistrationResponse {
   success: boolean;
@@ -17,6 +18,7 @@ interface RegistrationResponse {
     _id: string;
     createdAt: string;
     updatedAt: string;
+    accessToken: string;
     __v: number;
   };
   message: string;
@@ -73,12 +75,18 @@ function Register() {
           password: newUser.password,
         }),
       });
-		const result = (await resp.json()) as RegistrationResponse;
+      const result = (await resp.json()) as RegistrationResponse;
 
-		if(!resp.ok){
-			console.log(result)
-			throw new Error(result.message)
-		}
+      if (!resp.ok) {
+        console.log(result);
+        showToast.error(result.message);
+        throw new Error(result.message);
+      }
+      Cookies.set("doctor-token", result.data.accessToken, {
+        expires: 1,
+        secure: true,
+        sameSite: "strict",
+      });
 
       setCurrentUser(result.data);
       showToast.success("Successfully Registered");
@@ -138,18 +146,17 @@ function Register() {
             required
           />
           <div className="policy__container">
-          <input
-            type="radio"
-            className="policy"
-            id="policy"
-            checked={policy}
-            onClick={changePolicy}
-          />
-          <label className="policy__label" htmlFor="policy">
-            By opening an account you agree to the terms and conditions of our{" "}
-            <Link to="/">privacy policy</Link>
-          </label>
-
+            <input
+              type="radio"
+              className="policy"
+              id="policy"
+              checked={policy}
+              onClick={changePolicy}
+            />
+            <label className="policy__label" htmlFor="policy">
+              By opening an account you agree to the terms and conditions of our{" "}
+              <Link to="/">privacy policy</Link>
+            </label>
           </div>
           <button className="submit__btn">
             {loading ? <Loader /> : "Submit"}

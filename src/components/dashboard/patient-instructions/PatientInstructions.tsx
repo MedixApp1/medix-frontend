@@ -52,10 +52,11 @@ function PatientInstructions() {
     }
   }, []);
   return (
-    <div className="instructions__tab">
+    <div className="instructions__tab" id="patient-item">
       <div>
+      <h1 style={{ marginBottom: "2rem" }}>Medix</h1>
       {currentEncounter?.patientInstructions?.messageFromDoctor && (
-        <div className="note__section">
+        <div className="note__section" style={{marginBottom: "1.5rem"}}>
           <h4 contentEditable className="title">
             Doctor Message
           </h4>
@@ -66,20 +67,20 @@ function PatientInstructions() {
           </div>
         </div>
       )}
-      {currentEncounter?.patientInstructions?.medication && (
-        <div className="note__section">
+      {currentEncounter?.patientInstructions?.medication.length! > 0 && (
+        <div className="note__section" style={{marginBottom: "1.5rem"}}>
           <h4 contentEditable className="title">
             Medication
           </h4>
           <div className="note__content">
-          { currentEncounter?.patientInstructions.medication.map((item, index)=> <p key={index} contentEditable>
+          { currentEncounter?.patientInstructions?.medication.map((item, index)=> <p key={index} contentEditable>
               - {item.action} {item.details}
             </p>) }
           </div>
         </div>
       )}
       {currentEncounter?.patientInstructions?.messageFromDoctor && (
-        <div className="note__section">
+        <div className="note__section" style={{marginBottom: "1.5rem"}}>
           <h4 contentEditable className="title">
            Instructions
           </h4>
@@ -90,25 +91,25 @@ function PatientInstructions() {
           </div>
         </div>
       )}
-      {currentEncounter?.patientInstructions?.lifestyleChanges && (
-        <div className="note__section">
+      {currentEncounter?.patientInstructions?.lifestyleChanges?.length! > 0 && (
+        <div className="note__section" style={{marginBottom: "1.5rem"}}>
           <h4 contentEditable className="title">
            Life Style Changes
           </h4>
           <div className="note__content">
-          { currentEncounter.patientInstructions.lifestyleChanges.map((item, index)=> <p key={index} contentEditable>
+          { currentEncounter?.patientInstructions?.lifestyleChanges?.map((item, index)=> <p key={index} contentEditable>
               - {item.action} {item.details}
             </p>) }
           </div>
         </div>
       )}
-      {currentEncounter?.patientInstructions?.followUp && (
-        <div className="note__section">
+      {currentEncounter?.patientInstructions?.followUp?.length! > 0 && (
+        <div className="note__section" style={{marginBottom: "1.5rem"}}>
           <h4 contentEditable className="title">
            Instructions
           </h4>
           <div className="note__content">
-          { currentEncounter?.patientInstructions.followUp.map((item, index)=> <p key={index} contentEditable>
+          { currentEncounter?.patientInstructions?.followUp.map((item, index)=> <p key={index} contentEditable>
               - {item.action} {item.details}
             </p>) }
           </div>

@@ -12,6 +12,7 @@ import html2pdf from "html2pdf.js";
 import { handleCopy } from "../../utils/handleCopy";
 import PatientInstructions from "../../components/dashboard/patient-instructions/PatientInstructions";
 import useTimer from "../../hooks/useTimer";
+import { ResponseType, EncounterType } from "../../hooks/useNewEncounter";
 
 interface AudioUploadResponse {
   success: boolean;
@@ -40,12 +41,12 @@ interface AppointmentResponse {
 
 function AudioIndicator() {
   const { currentEncounter, setCurrentEncounter } = useNewEncounter();
-  const {  startTimer, resetTimer, elapsedTime } = useTimer();
+  const { startTimer, resetTimer, elapsedTime } = useTimer();
   const [blob, setBlob] = useState<Blob>();
   const recorder = useAudioRecorder();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [_, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const sendAudioToSever = async () => {
     console.log(blob);
@@ -110,15 +111,17 @@ function AudioIndicator() {
       setIsLoading(false);
     }
   };
-  const playAudio = () => {
+  const playAudio = async () => {
     setIsPlaying(true);
+
+    startTimer();
     recorder.startRecording();
-    startTimer()
+    recorder.startRecording();
   };
   const pauseAudio = async () => {
     setIsPlaying(false);
     recorder.stopRecording();
-    resetTimer()
+    resetTimer();
     await sendAudioToSever();
   };
 
@@ -152,9 +155,13 @@ function AudioIndicator() {
 
       <p>{elapsedTime}</p>
       {!isPlaying ? (
-        <button onClick={playAudio}>Play Recording</button>
+        <button disabled={isLoading} onClick={playAudio}>
+          Record encounter
+        </button>
       ) : (
-        <button onClick={pauseAudio}>Generate Transcript</button>
+        <button disabled={isLoading} onClick={pauseAudio}>
+          Generate Transcript
+        </button>
       )}
     </div>
   );
@@ -166,10 +173,40 @@ function RecordingPage() {
   >("transcript");
 
   const [showOptions, setShowOptions] = useState(false);
-  const { currentEncounter } = useNewEncounter();
+  const { currentEncounter, setCurrentEncounter } = useNewEncounter();
 
-  const regenerateNote = async (generateNewNote: () => Promise<void>) => {
-    generateNewNote();
+  const [isLoadingNote, setIsLoadingNote] = useState(false);
+
+  const getEncounterNote = async () => {
+    try {
+      setIsLoadingNote(true);
+      setCurrentEncounter({ note: undefined });
+      const token = Cookies.get("doctor-token");
+      const resp = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/appointment/note`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            appointmentId: currentEncounter?.appointmentId,
+            country: "Nigeria",
+          }),
+        }
+      );
+      const result = (await resp.json()) as ResponseType<EncounterType>;
+      setCurrentEncounter({ note: result.data?.note });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error);
+        showToast.error(error.message);
+      }
+      console.log(error);
+    } finally {
+      setIsLoadingNote(false);
+    }
   };
 
   const generateNotePdf = () => {
@@ -214,9 +251,33 @@ function RecordingPage() {
       - ${medicationContent}
     `;
 
+    const lifeContent =
+      currentEncounter?.patientInstructions?.lifestyleChanges.map(
+        (item) => `- ${item.action} ${item.details}\n`
+      );
+
+    const lifeChanges = `
+    Life Style Changes
+  \n
+      - ${lifeContent}
+    `;
+
+    const instructionContent =
+      currentEncounter?.patientInstructions?.otherInstructions.map(
+        (item) => `- ${item.action} ${item.details}\n`
+      );
+
+    const otherInstruction = `
+  Life Style Changes
+\n
+    - ${instructionContent}
+  `;
+
     const mailToLink = `mailto:${"email"}?subject=${encodeURIComponent(
       "Patient Instruction"
-    )}&body=${encodeURIComponent(`${message} ${medications} ${followUp}`)}`;
+    )}&body=${encodeURIComponent(
+      `${message} ${medications} ${followUp} ${lifeChanges} ${otherInstruction}`
+    )}`;
     window.location.href = mailToLink;
   };
 
@@ -229,12 +290,38 @@ function RecordingPage() {
     await handleCopy(body);
   };
 
+  const copyNote = async () => {
+    if (!currentEncounter?.note) return;
+    let body = "";
+    body += `${currentEncounter.note.title}\n\n\n`;
+    for (let i = 0; i < currentEncounter!.note!.sections.length; i++) {
+      body += `${currentEncounter!.note!.sections[i]?.text}\n\n`;
+    }
+    await handleCopy(body);
+  };
+
   const handleCurrentTab = (tab: "transcript" | "instruction" | "note") => {
     if (currentTab == tab) return;
     if (!currentEncounter?.transcript) {
       return showToast.error("You have not generated a transcript");
     }
     setCurrentTab(tab);
+  };
+
+  const generatePatientPDf = () => {
+    if (!currentEncounter?.patientInstructions?.medication)
+      return showToast.error("No patient Instuction");
+    const element = document.getElementById("patient-item");
+    var opt = {
+      margin: 1,
+      filename: "myfile.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+    };
+    // New Promise-based usage:
+    html2pdf().set(opt).from(element).save();
   };
 
   const tabOptions = {
@@ -244,22 +331,12 @@ function RecordingPage() {
         icon: "/icons/copy.svg",
         action: copyTranscript,
       },
-      {
-        text: "Save Encounter",
-        icon: "/icons/save.svg",
-        action: copyTranscript,
-      },
     ],
     instruction: [
       {
         text: "Generate PDF",
         icon: "/icons/pdf.svg",
-        action: copyTranscript,
-      },
-      {
-        text: "Save Encounter",
-        icon: "/icons/save.svg",
-        action: copyTranscript,
+        action: generatePatientPDf,
       },
       {
         text: "Send To Patient",
@@ -271,25 +348,20 @@ function RecordingPage() {
       {
         text: "Copy Note",
         icon: "/icons/copy.svg",
-        action: copyTranscript,
+        action: copyNote,
       },
       {
         text: "Regenerate Note",
         icon: "/icons/cycle.svg",
-        action: copyTranscript,
+        action: getEncounterNote,
       },
       {
         text: "Generate PDF",
         icon: "/icons/pdf.svg",
         action: generateNotePdf,
       },
-      {
-        text: "Save Encounter",
-        icon: "/icons/save.svg",
-        action: copyTranscript,
-      },
     ],
-  };
+  } as const;
 
   const renderActiveTab = () => {
     if (currentTab == "transcript") {
@@ -299,7 +371,9 @@ function RecordingPage() {
       return <PatientInstructions />;
     }
     if (currentTab == "note") {
-      return <NoteItem generateNote={regenerateNote} />;
+      return (
+        <NoteItem generateNote={getEncounterNote} isLoading={isLoadingNote} />
+      );
     }
     return <TranscriptItems />;
   };

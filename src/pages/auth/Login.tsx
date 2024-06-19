@@ -70,6 +70,10 @@ function Login() {
       });
 
       const result = (await resp.json()) as LoginResponse;
+
+      if(!resp.ok) {
+        return showToast.error(result.message)
+      }
       Cookie.set("doctor-token", result.data.accessToken, {
         expires: 1,
         secure: true,
@@ -111,6 +115,7 @@ function Login() {
 			throw new Error(result.message)
 		}
 		console.log(result)
+
       setCurrentUser(result.data);
       navigate("/dashboard");
       showToast.success("Welcome Back");
