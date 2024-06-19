@@ -5,7 +5,6 @@ import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 
 import TranscriptItems from "../recording-page/TranscriptItems";
 import NoteItem from "../recording-page/NoteItem";
-import useRealTimeTranscript from "../../hooks/useRealTimeTranscript";
 import useNewEncounter from "../../hooks/useNewEncounter";
 import showToast from "../../utils/showToast";
 import PatientInstructions from "../../components/dashboard/patient-instructions/PatientInstructions";
@@ -100,7 +99,7 @@ function AudioIndicator({
 
 function EncounterOverview() {
 
-    useRealTimeTranscript();
+
   const { currentEncounter } = useNewEncounter();
   const [showOptions, setShowOptions] = useState(false);
   const [currentTab, setCurrentTab] = useState<
@@ -177,35 +176,6 @@ function EncounterOverview() {
     window.location.href = mailToLink;
   };
 
-  // const emailInstructions = () => {
-  //   const headings = [
-  //     "Chief Complaint",
-  //     "History of Present Illness",
-  //     "Past Medical History",
-  //     "Medications",
-  //     "Allergies",
-  //     // Add more headings as needed
-  //   ];
-
-  //   const sections = [
-  //     "Severe stomach ache since yesterday night",
-  //     "Stomach ache started yesterday night and continued throughout the night. Patient took an antacid but pain persisted. Patient also experienced bouts of vomiting last night and this morning. Patient denies headache. Similar episode occurred 3 months ago, resolved with antacid.",
-  //     "History of similar stomach ache 3 months ago",
-  //     "", // No medications
-  //     "", // No allergies
-  //     // Add more section texts as needed
-  //   ];
-
-  //   let body = "";
-
-  //   for (let i = 0; i < headings.length; i++) {
-  //     body += `<b>${headings[i]}</b><br>${sections[i]}<br><br>`;
-  //   }
-  //   const mailToLink = `mailto:${""}?subject=${encodeURIComponent(
-  //     "Patient Instruction"
-  //   )}&body=${encodeURIComponent(body)}`;
-  //   window.location.href = mailToLink;
-  // };
 
   const tabOptions = {
     transcript: [
