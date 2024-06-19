@@ -1,122 +1,265 @@
 import "./style.scss";
-import { useEffect, useState } from "react";
-import { AudioVisualizer, LiveAudioVisualizer } from "react-audio-visualize";
+import { useRef, useState } from "react";
+import {  LiveAudioVisualizer } from "react-audio-visualize";
 import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 
 import TranscriptItems from "../recording-page/TranscriptItems";
 import NoteItem from "../recording-page/NoteItem";
 import useRealTimeTranscript from "../../hooks/useRealTimeTranscript";
 import useNewEncounter from "../../hooks/useNewEncounter";
-import Cookies from "js-cookie";
 import showToast from "../../utils/showToast";
 import PatientInstructions from "../../components/dashboard/patient-instructions/PatientInstructions";
+import html2pdf from "html2pdf.js";
 
-// const obj = {
-//   id: "90656c3e-af12-41a0-bf1e-900dc70c9d2a",
-//   text: "Of having ads related diseases so yeah that's all i have for you",
-//   speaker: "unspecified",
-//   start_offset_ms: 72670,
-//   end_offset_ms: 78950,
-//   is_final: false,
-//   object: "transcript_item",
-// };
+const handleCopy = async (text: string) => {
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast.success("Copied Successfully");
+  } catch (err) {
+    showToast.error("Couldn't copy");
+  }
+};
 
-// const generatedNote = [
-//   {
-//     key: "SOCIAL_HISTORY",
-//     title: "Social history",
-//     text: "- Recommended to engage in exercises for mental and physical health\n- Advised to avoid alcohol and smoking to prevent diseases like cancer and liver problems\n- Suggested to do exercises at least two times a day to strengthen muscles and reduce risk of heart diseases",
-//     content: [
-//       "Recommended to engage in exercises for mental and physical health",
-//       "Advised to avoid alcohol and smoking to prevent diseases like cancer and liver problems",
-//       "Suggested to do exercises at least two times a day to strengthen muscles and reduce risk of heart diseases",
-//     ],
-//   },
-//   {
-//     key: "CURRENT_MEDICATIONS",
-//     title: "Current medications",
-//     text: "Medication to be taken three times a day: morning, afternoon, and night",
-//     content: [
-//       "Medication to be taken three times a day: morning, afternoon, and night",
-//     ],
-//   },
-//   {
-//     key: "PLAN",
-//     title: "Plan",
-//     text: "- Engage in mental healing exercises like meditation\n- Regular physical exercise, at least twice a day\n- Avoidance of alcohol and smoking",
-//     content: [
-//       "Engage in mental healing exercises like meditation",
-//       "Regular physical exercise, at least twice a day",
-//       "Avoidance of alcohol and smoking",
-//     ],
-//   },
-//   {
-//     key: "PRESCRIPTION",
-//     title: "Prescription",
-//     text: "Medication prescribed to be taken three times a day",
-//     content: ["Medication prescribed to be taken three times a day"],
-//   },
-// ];
-
-// const transcriptData = Array(7).fill(obj);
-
-function AudioIndicator() {
-  const [blob, setBlob] = useState<Blob>();
+function AudioIndicator({
+  audiosrc
+}: {
+  audiosrc: string;
+  type: string;
+}) {
+  const [_, setBlob] = useState<Blob>();
   const recorder = useAudioRecorder();
-  const {currentEncounter} = useNewEncounter();
   // recorder.startRecording();
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  // const [audioUrl, setAudioUrl] = useState("")
+  // const visualizerRef = useRef<HTMLCanvasElement>(null)
+
+  // useEffect(() => {
+  //   audioRef.current!.src = audiosrc;
+  //   getBlobFromAudio(audioRef.current!, type)
+  //     .then((audioBlob) => {
+  //       console.log(audioBlob);
+  //       setBlob(audioBlob);
+  //       // Do something with the audioBlob, e.g., upload it or create a URL
+  //       const audioUrl = URL.createObjectURL(audioBlob);
+
+  //       setAudioUrl(audioUrl)
+  //       console.log("Audio URL:", audioUrl);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
+  // });
+
+  const playAudio = () => {
+    setIsPlaying(true);
+    recorder.startRecording();
+    audioRef.current?.play();
+  };
+  const pauseAudio = () => {
+    setIsPlaying(false);
+    recorder.stopRecording();
+    audioRef.current?.pause();
+  };
 
   return (
     <div className="audio__indicator">
-      <audio src=""></audio>
+      <audio
+        style={{ display: "none" }}
+        ref={audioRef}
+        onPause={pauseAudio}
+        onPlay={playAudio}
+        src={audiosrc}
+        controls
+      ></audio>
       <div style={{ display: "none" }}>
         <AudioRecorder
           onRecordingComplete={setBlob}
           recorderControls={recorder}
         />
       </div>
+      <div className="live__visualizer">
+        {recorder.mediaRecorder && (
+          <LiveAudioVisualizer
+            mediaRecorder={recorder.mediaRecorder}
+            width={200}
+            height={75}
+          />
+        )}
+      </div>
 
-      {recorder.mediaRecorder && (
-        <LiveAudioVisualizer
-          mediaRecorder={recorder.mediaRecorder}
-          width={200}
-          height={75}
-        />
-      )}
-
-      {blob && (
-        <AudioVisualizer
-          blob={blob}
-          width={500}
-          height={75}
-          barWidth={1}
-          gap={0}
-          barColor={"#f76565"}
-        />
-      )}
-
-      {blob && (
-        <AudioVisualizer
-          blob={blob}
-          width={500}
-          height={75}
-          barWidth={3}
-          gap={2}
-          barColor={"lightblue"}
-        />
+      <p>00 : 23 : 21</p>
+      {!isPlaying ? (
+        <button onClick={playAudio}>Play Recording</button>
+      ) : (
+        <button onClick={pauseAudio}>Pause Recording</button>
       )}
     </div>
   );
 }
 
 function EncounterOverview() {
-  const { startRecording, transcriptData: recordingData } =
-    useRealTimeTranscript();
-  const { currentEncounter, setCurrentEncounter } = useNewEncounter();
 
+    useRealTimeTranscript();
+  const { currentEncounter } = useNewEncounter();
+  const [showOptions, setShowOptions] = useState(false);
   const [currentTab, setCurrentTab] = useState<
     "transcript" | "instruction" | "note"
   >("transcript");
+
+  const copyTranscript = async () => {
+    let body = "";
+    for (let i = 0; i < currentEncounter!.transcript!.length; i++) {
+      body += `${currentEncounter!.transcript!}\n\n`;
+    }
+    await handleCopy(body);
+  };
+
+  // const copyNote = async () => {
+  //   let body = "";
+  //   const sections = Object.keys(currentEncounter?.note?.sections || {});
+
+  //   for (let i = 0; i < currentEncounter?.note?.sections?.length!; i++) {
+  //     body += `${sections[i]}\n${currentEncounter?.note?.sections[i].content}\n\n`;
+  //   }
+  //   await handleCopy(body);
+  // };
+
+  const regenerateNote = async (generateNewNote: () => Promise<void>) => {
+    generateNewNote();
+  };
+
+  const generateNotePdf = () => {
+    const element = document.getElementById("note-item");
+    var opt = {
+      margin: 1,
+      filename: "myfile.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+    };
+    // New Promise-based usage:
+    html2pdf().set(opt).from(element).save();
+  };
+
+  const emailToPatient = () => {
+    const message = `
+            Doctor Message
+          \n
+              - ${currentEncounter?.patientInstructions?.messageFromDoctor}
+            `;
+
+    const medicationContent =
+      currentEncounter?.patientInstructions?.medication.map(
+        (item) => `- ${item.action} ${item.details}\n`
+      );
+
+    const medications = `
+    Medication
+  \n
+      - ${medicationContent}
+    `;
+
+    // const followUpContent = currentEncounter?.patientInstructions?.followUp.map(
+    //   (item, index) => `- ${item.action} ${item.details}\n`
+    // );
+
+    const followUp = `
+    Medication
+  \n
+      - ${medicationContent}
+    `;
+
+    const mailToLink = `mailto:${"email"}?subject=${encodeURIComponent(
+      "Patient Instruction"
+    )}&body=${encodeURIComponent(`${message} ${medications} ${followUp}`)}`;
+    window.location.href = mailToLink;
+  };
+
+  // const emailInstructions = () => {
+  //   const headings = [
+  //     "Chief Complaint",
+  //     "History of Present Illness",
+  //     "Past Medical History",
+  //     "Medications",
+  //     "Allergies",
+  //     // Add more headings as needed
+  //   ];
+
+  //   const sections = [
+  //     "Severe stomach ache since yesterday night",
+  //     "Stomach ache started yesterday night and continued throughout the night. Patient took an antacid but pain persisted. Patient also experienced bouts of vomiting last night and this morning. Patient denies headache. Similar episode occurred 3 months ago, resolved with antacid.",
+  //     "History of similar stomach ache 3 months ago",
+  //     "", // No medications
+  //     "", // No allergies
+  //     // Add more section texts as needed
+  //   ];
+
+  //   let body = "";
+
+  //   for (let i = 0; i < headings.length; i++) {
+  //     body += `<b>${headings[i]}</b><br>${sections[i]}<br><br>`;
+  //   }
+  //   const mailToLink = `mailto:${""}?subject=${encodeURIComponent(
+  //     "Patient Instruction"
+  //   )}&body=${encodeURIComponent(body)}`;
+  //   window.location.href = mailToLink;
+  // };
+
+  const tabOptions = {
+    transcript: [
+      {
+        text: "Copy Transcript",
+        icon: "/icons/copy.svg",
+        action: copyTranscript,
+      },
+      {
+        text: "Save Encounter",
+        icon: "/icons/save.svg",
+        action: copyTranscript,
+      },
+    ],
+    instruction: [
+      {
+        text: "Generate PDF",
+        icon: "/icons/pdf.svg",
+        action: copyTranscript,
+      },
+      {
+        text: "Save Encounter",
+        icon: "/icons/save.svg",
+        action: copyTranscript,
+      },
+      {
+        text: "Send To Patient",
+        icon: "/icons/send.svg",
+        action: emailToPatient,
+      },
+    ],
+    note: [
+      {
+        text: "Copy Note",
+        icon: "/icons/copy.svg",
+        action: copyTranscript,
+      },
+      {
+        text: "Regenerate Note",
+        icon: "/icons/cycle.svg",
+        action: copyTranscript,
+      },
+      {
+        text: "Generate PDF",
+        icon: "/icons/pdf.svg",
+        action: generateNotePdf,
+      },
+      {
+        text: "Save Encounter",
+        icon: "/icons/save.svg",
+        action: copyTranscript,
+      },
+    ],
+  };
 
   const renderActiveTab = () => {
     if (currentTab == "transcript") {
@@ -126,20 +269,20 @@ function EncounterOverview() {
       return <PatientInstructions />;
     }
     if (currentTab == "note") {
-      return <NoteItem  />;
+      return <NoteItem generateNote={regenerateNote} />;
     }
     return <TranscriptItems />;
   };
-
 
   return (
     <div className="recording__page">
       <div className="record__visual">
         <img src="/icons/mic.svg" alt="" />
 
-        <AudioIndicator />
-        <p>00 : 23 : 21</p>
-        <button onClick={startRecording}>Play Recording</button>
+        <AudioIndicator
+          audiosrc={currentEncounter?.mediaLink!}
+          type={currentEncounter?.memeType!}
+        />
       </div>
       <div className="record__data">
         <div className="tabs">
@@ -162,7 +305,31 @@ function EncounterOverview() {
             Patient Instruction
           </p>
         </div>
-        <div className="tab__content">{renderActiveTab()}</div>
+        <div className="tab__content">
+          {renderActiveTab()}
+          <div className="options__btn">
+            {showOptions && (
+              <div className="encounter__options">
+                {tabOptions[currentTab].map((item, index) => (
+                  <div key={index} onClick={() => item.action()}>
+                    <img src={item.icon} alt="" />
+                    <p>{item.text}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="opt">
+              <img src="/icons/menu.svg" alt="" />
+              <p>Options</p>
+            </div>
+            <button onClick={() => setShowOptions(!showOptions)}>
+              <img
+                src={`/icons/${showOptions ? "up-arrow" : "down-arrow"}.svg`}
+                alt=""
+              />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

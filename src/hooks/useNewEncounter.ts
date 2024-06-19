@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { NoteSection } from '../pages/recording-page/NoteItem';
 
 interface Note {
 	title: string;
@@ -43,6 +42,8 @@ interface Note {
 	patientInstructions: PatientInstructions;
 	_id: string;
 	transcript: string[];
+	memeType: string;
+	fileName:string;
 	createdAt: string;
 	updatedAt: string;
 	mediaLink: string;
@@ -68,16 +69,20 @@ interface Note {
 
 interface CurrentEncounterState {
 	currentEncounter: Partial<EncounterType> | null;
+	allEncounters: EncounterType[];
+	setAllEncounters: (encounters: EncounterType[]) => void;
 	setCurrentEncounter: (encounter: Partial<EncounterType>) => void;
 	resetCurrentEncounter: ()=>void;
 }
 
 const initialState = {
-	currentEncounter: null
+	currentEncounter: null,
+	allEncounters: [],
 };
 
 const useNewEncounter = create<CurrentEncounterState>()((set) => ({
 	...initialState,
+	setAllEncounters:(encounters)=> set(()=> ({allEncounters: encounters})),
 	setCurrentEncounter: (encounter) => set((state) => ({ currentEncounter: {...state.currentEncounter, ...encounter} })),
 	resetCurrentEncounter:()=>set(()=>({currentEncounter: null}))
 }));

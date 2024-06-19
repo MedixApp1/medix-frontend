@@ -16,8 +16,7 @@ const SessionChart = () => {
 
 		// canvas.style.height = canvasHeight + 'px';
 		canvas.style.width = '100%';
-		const fontFamily = 'Ysabeau, sans-serif';
-
+	
 		new Chart(ctx, {
 			type: 'bar',
 			data: {

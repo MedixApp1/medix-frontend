@@ -66,13 +66,13 @@ function PatientInstructions() {
           </div>
         </div>
       )}
-      {currentEncounter?.patientInstructions?.messageFromDoctor && (
+      {currentEncounter?.patientInstructions?.medication && (
         <div className="note__section">
           <h4 contentEditable className="title">
             Medication
           </h4>
           <div className="note__content">
-          { currentEncounter.patientInstructions.medication.map((item, index)=> <p key={index} contentEditable>
+          { currentEncounter?.patientInstructions.medication.map((item, index)=> <p key={index} contentEditable>
               - {item.action} {item.details}
             </p>) }
           </div>
@@ -108,7 +108,7 @@ function PatientInstructions() {
            Instructions
           </h4>
           <div className="note__content">
-          { currentEncounter.patientInstructions.followUp.map((item, index)=> <p key={index} contentEditable>
+          { currentEncounter?.patientInstructions.followUp.map((item, index)=> <p key={index} contentEditable>
               - {item.action} {item.details}
             </p>) }
           </div>

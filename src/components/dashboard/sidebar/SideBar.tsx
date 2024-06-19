@@ -1,14 +1,12 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SidebarItem from "./SidebarItem";
 import useCurrentUser from "../../../hooks/useCurrentUser";
 import "./style.scss";
-import Toogle from "../toogle/Toogle";
-import { useState } from "react";
 
 function SideBar() {
   const setSideBar = useCurrentUser((state) => state.setSideBar);
   const currentUser = useCurrentUser((state) => state.currentUser);
-  const sideBarState = useCurrentUser((state) => state.sideBar);
+  // const sideBarState = useCurrentUser((state) => state.sideBar);
   const navigate = useNavigate();
 
   const {sideBar} = useCurrentUser();
@@ -45,13 +43,13 @@ function SideBar() {
       <SidebarItem
         link="/dashboard/new-record"
         icon="/icons/appointments.svg"
-        title="New Record"
+        title="New Encounter"
         handleClick={handleNavLinkClick}
       />
       <SidebarItem
         link="/dashboard/records"
         icon="/icons/records.svg"
-        title="Records"
+        title="All Encounters"
         handleClick={handleNavLinkClick}
       />
       <div className="logout__container">

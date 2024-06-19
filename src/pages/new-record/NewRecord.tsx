@@ -6,84 +6,84 @@ import { Fragment } from "react/jsx-runtime";
 import { useRef, useState } from "react";
 import Cookies from "js-cookie";
 import showToast from "../../utils/showToast";
-import useRealTimeTranscript from "../../hooks/useRealTimeTranscript";
+
 import useNewEncounter from "../../hooks/useNewEncounter";
 import { bytesToMegabytes } from "../../utils/utils";
 import Loader from "../../components/shared/loader/circle-loader/Loader";
 
-const exmple = {
-  "success": true,
-  "data": {
-      "transcript": [
-          "May I come in doctor?",
-          "Yes come in. Take your seat.",
-          "Thank you doctor.",
-          "What's your name?",
-          "I am Simran Parveen",
-          "And how old are you?",
-          "I am 29",
-          "Okay. Now tell me, what are the problems that you're facing?",
-          "Since yesterday night I've been having severe stomach ache. I took an antacid last night but the pain was still the same.",
-          "Any other symptoms?",
-          "Yeah, I also had bouts of vomiting last night and today morning as well.",
-          "Do you have a headache?",
-          "No",
-          "Did you have this kind of stomach ache before?",
-          "Yes doctor I had it once before.",
-          "How many days ago?",
-          "Almost 3 months ago but at that time the pain stopped after I took an antacid",
-          "Please lie on that bed. I have to check.",
-          "Okay doctor.",
-          "Does it hurt here?",
-          "Yes doctor it hurts a lot.",
-          "Okay you can get up now.",
-          "Is it something serious doctor?",
-          "I can't say now. I'm writing down some tests. Try to do this by today.",
-          "But what about now? I can't even work properly because of the pain.",
-          "I understand. I'm giving you an injection for temporary relief.",
-          "Injection? Don't you have any medicine?",
-          "Why? Are you scared of injections?",
-          "It's not like that. I mean it would be better if you could give me some medicine",
-          "Nothing will happen. You won't even feel it. Look at that side.",
-          "Please doctor be careful.",
-          "You can open your eyes now. It's already done.",
-          "Oh it's done? Thank you so much I did not feel anything at all.",
-          "After receiving the test reports, bring them to me as soon as possible.",
-          "There's nothing to fear, right?",
-          "Don't be so scared beforehand. Let's see the reports first.",
-          "Won't you give me any medicines doctor?",
-          "I am prescribing this medicine. It's just for today. Take it after your dinner.",
-          "Okay doctor.",
-          "Where shall I submit the fees?",
-          "Please submit that in the cash counter.",
-          "Thank you doctor.",
-          "Welcome.",
-          "May I come in doctor?",
-          "Oh yes, come in please.",
-          "Here are the reports of the tests that you gave.",
-          "Oh yeah, let me check them.",
-          "It's not that serious. Nothing to worry about. It was just food poisoning. I'm writing down some medicines. Please take them for 1 week after dinner.",
-          "Oh okay doctor.",
-          "And if you face this problem again, come back immediately.",
-          "Sure doctor. Thank you.",
-          "You're welcome. So, this was the conversation. I hope you liked it. Now is the time for the question. The question is: What was the age of the patient? Make sure to answer this question in the comment box below. I'd eagerly be waiting for your answers. And if you like this conversation, then click on the like button. And if you want more such conversations like this and haven't subscribed my channel yet, then make sure to click on the subscribe button. And share this video with your friends and family. That's it for today. Meet you in the next video with another interesting topic. Thank you. Bye."
-      ],
-      "note": {
-          "sections": []
-      },
-      "patientInstructions": {
-          "medication": [],
-          "lifestyleChanges": [],
-          "followUp": [],
-          "otherInstructions": []
-      },
-      "_id": "66721a381b6e52a985a86ec2",
-      "createdAt": "2024-06-18T23:37:28.157Z",
-      "updatedAt": "2024-06-18T23:37:28.157Z",
-      "__v": 0
-  },
-  "message": "Appointment Created Successfully"
-}
+// const exmple = {
+//   "success": true,
+//   "data": {
+//       "transcript": [
+//           "May I come in doctor?",
+//           "Yes come in. Take your seat.",
+//           "Thank you doctor.",
+//           "What's your name?",
+//           "I am Simran Parveen",
+//           "And how old are you?",
+//           "I am 29",
+//           "Okay. Now tell me, what are the problems that you're facing?",
+//           "Since yesterday night I've been having severe stomach ache. I took an antacid last night but the pain was still the same.",
+//           "Any other symptoms?",
+//           "Yeah, I also had bouts of vomiting last night and today morning as well.",
+//           "Do you have a headache?",
+//           "No",
+//           "Did you have this kind of stomach ache before?",
+//           "Yes doctor I had it once before.",
+//           "How many days ago?",
+//           "Almost 3 months ago but at that time the pain stopped after I took an antacid",
+//           "Please lie on that bed. I have to check.",
+//           "Okay doctor.",
+//           "Does it hurt here?",
+//           "Yes doctor it hurts a lot.",
+//           "Okay you can get up now.",
+//           "Is it something serious doctor?",
+//           "I can't say now. I'm writing down some tests. Try to do this by today.",
+//           "But what about now? I can't even work properly because of the pain.",
+//           "I understand. I'm giving you an injection for temporary relief.",
+//           "Injection? Don't you have any medicine?",
+//           "Why? Are you scared of injections?",
+//           "It's not like that. I mean it would be better if you could give me some medicine",
+//           "Nothing will happen. You won't even feel it. Look at that side.",
+//           "Please doctor be careful.",
+//           "You can open your eyes now. It's already done.",
+//           "Oh it's done? Thank you so much I did not feel anything at all.",
+//           "After receiving the test reports, bring them to me as soon as possible.",
+//           "There's nothing to fear, right?",
+//           "Don't be so scared beforehand. Let's see the reports first.",
+//           "Won't you give me any medicines doctor?",
+//           "I am prescribing this medicine. It's just for today. Take it after your dinner.",
+//           "Okay doctor.",
+//           "Where shall I submit the fees?",
+//           "Please submit that in the cash counter.",
+//           "Thank you doctor.",
+//           "Welcome.",
+//           "May I come in doctor?",
+//           "Oh yes, come in please.",
+//           "Here are the reports of the tests that you gave.",
+//           "Oh yeah, let me check them.",
+//           "It's not that serious. Nothing to worry about. It was just food poisoning. I'm writing down some medicines. Please take them for 1 week after dinner.",
+//           "Oh okay doctor.",
+//           "And if you face this problem again, come back immediately.",
+//           "Sure doctor. Thank you.",
+//           "You're welcome. So, this was the conversation. I hope you liked it. Now is the time for the question. The question is: What was the age of the patient? Make sure to answer this question in the comment box below. I'd eagerly be waiting for your answers. And if you like this conversation, then click on the like button. And if you want more such conversations like this and haven't subscribed my channel yet, then make sure to click on the subscribe button. And share this video with your friends and family. That's it for today. Meet you in the next video with another interesting topic. Thank you. Bye."
+//       ],
+//       "note": {
+//           "sections": []
+//       },
+//       "patientInstructions": {
+//           "medication": [],
+//           "lifestyleChanges": [],
+//           "followUp": [],
+//           "otherInstructions": []
+//       },
+//       "_id": "66721a381b6e52a985a86ec2",
+//       "createdAt": "2024-06-18T23:37:28.157Z",
+//       "updatedAt": "2024-06-18T23:37:28.157Z",
+//       "__v": 0
+//   },
+//   "message": "Appointment Created Successfully"
+// }
 
 interface AudioUploadResponse {
   success: boolean;
@@ -113,7 +113,7 @@ interface AppointmentResponse {
 
 
 function NewRecord() {
-  const { setCurrentEncounter, currentEncounter, resetCurrentEncounter } =
+  const { setCurrentEncounter, resetCurrentEncounter } =
     useNewEncounter();
   const navigate = useNavigate();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -174,6 +174,8 @@ function NewRecord() {
         console.log(fileUploadResult);
         setCurrentEncounter({
           ...fileUploadResult.data,
+          memeType: result.data.mimeType,
+          fileName: result.data.name,
           appointmentId: fileUploadResult.data._id,
           
         });
@@ -193,6 +195,7 @@ function NewRecord() {
   ) => {
     try {
       resetCurrentEncounter();
+      console.log("I uploaded")
 
       const file = event.target.files && event.target.files[0];
       setCurrentFile(file);

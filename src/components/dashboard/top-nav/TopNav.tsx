@@ -1,11 +1,10 @@
 import "./style.scss";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import Toogle from "../toogle/Toogle";
 import useCurrentUser from "../../../hooks/useCurrentUser";
 
 function TopNav() {
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [isPresent, setIsPresent] = useState(false);
   const handlePresentChange = () => {
     setIsPresent(!isPresent);

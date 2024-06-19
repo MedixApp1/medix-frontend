@@ -70,7 +70,7 @@ export default function useRealTimeTranscript() {
 
   const [transcriptData, setTranscriptData] = useState<string[]>([]);
   const [noteData, setNoteData] = useState<NabalaNotes[]>([]);
-  const [noteSections, setAllNoteSection] = useState([]);
+  const [noteSections] = useState([]);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null)
 
   const rawPCM16WorkerName = "raw-pcm-16-worker";

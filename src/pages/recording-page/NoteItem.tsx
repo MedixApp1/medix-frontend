@@ -1,34 +1,37 @@
 import { useEffect, useState } from "react";
 import Loader from "../../components/shared/loader/circle-loader/Loader";
 import Cookies from "js-cookie";
-import useNewEncounter, { EncounterType, ResponseType } from "../../hooks/useNewEncounter";
+import useNewEncounter, {
+  EncounterType,
+  ResponseType,
+} from "../../hooks/useNewEncounter";
 import showToast from "../../utils/showToast";
 
-interface Section {
-  key: string;
-  title: string;
-  text: string;
-  content: string[];
-  _id: string;
-}
+// interface Section {
+//   key: string;
+//   title: string;
+//   text: string;
+//   content: string[];
+//   _id: string;
+// }
 
-interface Note {
-  title: string;
-  sections: Section[];
-}
+// interface Note {
+//   title: string;
+//   sections: Section[];
+// }
 
-interface AppointmentNoteResponse {
-  success: boolean;
-  data: {
-    note: Note;
-    _id: string;
-    transcript: string[];
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-  };
-  message: string;
-}
+// interface AppointmentNoteResponse {
+//   success: boolean;
+//   data: {
+//     note: Note;
+//     _id: string;
+//     transcript: string[];
+//     createdAt: string;
+//     updatedAt: string;
+//     __v: number;
+//   };
+//   message: string;
+// }
 
 export type NoteSection = {
   key: string;
@@ -37,9 +40,11 @@ export type NoteSection = {
   content: string[];
 };
 
-
-
-function NoteItem() {
+function NoteItem({
+  generateNote,
+}: {
+  generateNote?: (generateNewNote: () => Promise<void>) => Promise<void>;
+}) {
   const [loading, setLoading] = useState(false);
   const { currentEncounter, setCurrentEncounter } = useNewEncounter();
 
@@ -74,23 +79,26 @@ function NoteItem() {
         setLoading(false);
       }
     };
-    if (currentEncounter?.appointmentId && currentEncounter.note?.sections?.length! <= 0) {
-      getEncounterNote();
+    if (
+      currentEncounter?.appointmentId &&
+      currentEncounter.note?.sections?.length! <= 0
+    ) {
+      generateNote?.(getEncounterNote);
     }
   }, []);
 
   return (
-    <div className="note__tab">
+    <div className="note__tab" >
       {currentEncounter?.note?.sections.map(
         (item) =>
           item.content.length > 0 && (
-            <div className="note__section">
+            <div className="note__section" >
               <h4 contentEditable className="title">
                 {item.title}
               </h4>
               <div className="note__content">
                 {item.content.map((content) => (
-                  <p contentEditable>- {content}</p>
+                  <p contentEditable> {content}</p>
                 ))}
               </div>
             </div>
@@ -101,6 +109,24 @@ function NoteItem() {
           <Loader color="#316596" />
         </div>
       )}
+      <div className="to__print" id="note-item">
+        <h1 style={{ marginBottom: "4rem" }}>Medix</h1>
+        {currentEncounter?.note?.sections.map(
+          (item) =>
+            item.content.length > 0 && (
+              <div className="note__section" style={{ marginBottom: "2rem" }}>
+                <h4 contentEditable className="title">
+                  {item.title}
+                </h4>
+                <div className="note__content">
+                  {item.content.map((content) => (
+                    <p contentEditable> {content}</p>
+                  ))}
+                </div>
+              </div>
+            )
+        )}
+      </div>
     </div>
   );
 }

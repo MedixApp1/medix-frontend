@@ -11,6 +11,7 @@ declare module "react-audio-visualize" {
     barWidth: number;
     gap: number;
     barColor: string;
+    ref?: React.RefObject<HTMLCanvasElement>
   }
 
   interface LiveAudioVisualizerProps {
