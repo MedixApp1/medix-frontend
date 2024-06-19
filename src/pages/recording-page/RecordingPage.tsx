@@ -11,6 +11,7 @@ import Cookies from "js-cookie";
 import html2pdf from "html2pdf.js";
 import { handleCopy } from "../../utils/handleCopy";
 import PatientInstructions from "../../components/dashboard/patient-instructions/PatientInstructions";
+import useTimer from "../../hooks/useTimer";
 
 interface AudioUploadResponse {
   success: boolean;
@@ -39,6 +40,7 @@ interface AppointmentResponse {
 
 function AudioIndicator() {
   const { currentEncounter, setCurrentEncounter } = useNewEncounter();
+  const {  startTimer, resetTimer, elapsedTime } = useTimer();
   const [blob, setBlob] = useState<Blob>();
   const recorder = useAudioRecorder();
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -111,10 +113,12 @@ function AudioIndicator() {
   const playAudio = () => {
     setIsPlaying(true);
     recorder.startRecording();
+    startTimer()
   };
   const pauseAudio = async () => {
     setIsPlaying(false);
     recorder.stopRecording();
+    resetTimer()
     await sendAudioToSever();
   };
 
@@ -146,7 +150,7 @@ function AudioIndicator() {
         )}
       </div>
 
-      <p>00 : 23 : 21</p>
+      <p>{elapsedTime}</p>
       {!isPlaying ? (
         <button onClick={playAudio}>Play Recording</button>
       ) : (
@@ -169,7 +173,8 @@ function RecordingPage() {
   };
 
   const generateNotePdf = () => {
-    if (!currentEncounter?.note) return showToast.error("You don't have not generated a Note");
+    if (!currentEncounter?.note)
+      return showToast.error("You don't have not generated a Note");
     const element = document.getElementById("note-item");
     var opt = {
       margin: 1,
@@ -184,7 +189,8 @@ function RecordingPage() {
   };
 
   const emailToPatient = () => {
-    if(!currentEncounter?.patientInstructions?.messageFromDoctor) return showToast.error('You dont have any patient Instructions');
+    if (!currentEncounter?.patientInstructions?.messageFromDoctor)
+      return showToast.error("You dont have any patient Instructions");
     const message = `
             Doctor Message
           \n
@@ -215,7 +221,7 @@ function RecordingPage() {
   };
 
   const copyTranscript = async () => {
-    if(!currentEncounter?.transcript) return
+    if (!currentEncounter?.transcript) return;
     let body = "";
     for (let i = 0; i < currentEncounter!.transcript!.length; i++) {
       body += `${currentEncounter!.transcript!}\n\n`;
@@ -223,13 +229,13 @@ function RecordingPage() {
     await handleCopy(body);
   };
 
-  const handleCurrentTab = (tab: "transcript" | "instruction" | "note")=> {
-    if(currentTab == tab) return;
-    if(!currentEncounter?.transcript){
-      return showToast.error("You have not generated a transcript")
+  const handleCurrentTab = (tab: "transcript" | "instruction" | "note") => {
+    if (currentTab == tab) return;
+    if (!currentEncounter?.transcript) {
+      return showToast.error("You have not generated a transcript");
     }
     setCurrentTab(tab);
-  }
+  };
 
   const tabOptions = {
     transcript: [

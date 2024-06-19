@@ -1,6 +1,6 @@
 import{ useState, useEffect } from 'react';
 
-const Timer = () => {
+const useTimer = () => {
   const [startTime, setStartTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState('00:00:00');
 
@@ -37,4 +37,4 @@ const Timer = () => {
   return {elapsedTime, resetTimer, startTimer, startTime};
 };
 
-export default Timer;
+export default useTimer;
