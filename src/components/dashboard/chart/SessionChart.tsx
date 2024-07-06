@@ -31,21 +31,27 @@ const SessionChart = () => {
 				],
 				datasets: [
 					{
-						label: 'Questions Answered',
+						label: 'Total Patient Per Day',
 						data: [12, 19, 3, 17, 28, 24, 7],
 						backgroundColor: 'rgb(75, 192, 192)',
 						pointStyle: 'circle',
+						barThickness: 8
 					}
 				],
 			},
 			options: {
 				responsive: true,
+				scales: {
+					x:{
+						
+					}
+				},
 				plugins: {
 				  legend: {
 					 position: 'top',
 				  },
 				  title: {
-					 display: true,
+					 display: false,
 					 text: 'Total Patient Per Day'
 				  }
 				}

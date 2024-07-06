@@ -3,7 +3,7 @@ import "./style.scss";
 function Loader({color = "white"}) {
 	return (
 		<svg
-			className="container"
+			className="circle__container"
 			viewBox="0 0 40 40"
 			height="40"
 			width="40"

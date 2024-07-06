@@ -58,7 +58,7 @@ function RecordsPage() {
         <EncounterCard
           title={encounter.note.title}
           key={index}
-          description={encounter.note.sections[0]?.text}
+          {...encounter}
         />
       ))}
     </div>

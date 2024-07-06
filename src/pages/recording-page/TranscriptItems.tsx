@@ -2,7 +2,7 @@ import useNewEncounter from "../../hooks/useNewEncounter";
 
 function TranscriptItems() {
   const { currentEncounter } = useNewEncounter();
-  console.log(currentEncounter)
+  
   return (
     <div>
       {currentEncounter?.transcript?.map((item, index) => (

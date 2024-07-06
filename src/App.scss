@@ -1,40 +1,43 @@
 * {
-   $theme: #F5C3C3;
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
-   font-family: "Segoe UI";
+	$theme: #f5c3c3;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Segoe UI";
 
-   button {
-      cursor: pointer;
-   }
+	button {
+		cursor: pointer;
+	}
 
-   img {
-      display: block;
-   }
+	img {
+		display: block;
+	}
 }
 
 html {
-   scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 @font-face {
-   font-family: "Poppins-B";
-   src: url("/fonts/Poppins-Bold.ttf");
+	font-family: "Poppins-B";
+	src: url("/fonts/Poppins-Bold.ttf");
 }
 
 @font-face {
-   font-family: "Inter";
-   src: url("/fonts/Inter.ttf");
-}
-
-
-@font-face {
-   font-family: "Montserrat";
-   src: url("/fonts/Montserrat.ttf");
+	font-family: "Inter";
+	src: url("/fonts/Inter.ttf");
 }
 
 @font-face {
-   font-family: "Manrope";
-   src: url("/fonts/manrope.ttf");
+	font-family: "Montserrat";
+	src: url("/fonts/Montserrat.ttf");
 }
+
+@font-face {
+	font-family: "Manrope";
+	src: url("/fonts/manrope.ttf");
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

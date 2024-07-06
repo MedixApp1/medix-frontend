@@ -7,7 +7,7 @@ const useTimer = () => {
   useEffect(() => {
     let interval: NodeJS.Timeout;
 
-    if (startTime) {
+    if (startTime) {  
       interval = setInterval(() => {
         const currentTime = new Date().getTime();
         const elapsedMs = currentTime - startTime;

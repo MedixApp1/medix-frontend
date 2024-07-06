@@ -15,7 +15,7 @@ function AnalyticsCard(props: AnalyticCardProps) {
       </span>
       <div>
         <p>{props.title}</p>
-        <h4>24,607</h4>
+        <h4>{props.count}</h4>
       </div>
     </div>
   );

@@ -94,8 +94,10 @@ function EncounterOverview() {
             country: "Nigeria",
           }),
         }
+        
       );
       const result = (await resp.json()) as ResponseType<EncounterType>;
+      console.log(result)
       setCurrentEncounter({ note: result.data?.note });
     } catch (error) {
       if (error instanceof Error) {

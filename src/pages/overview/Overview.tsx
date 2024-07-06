@@ -12,37 +12,35 @@ function Overview() {
         <div>
           <h4>Welcome back, Dr.{currentUser?.username}</h4>
           <p>
-            This page gives a brief overview of your recent sessions,
-            encounters, and interactions with your patients. It provides a
-            summary of the consultations, diagnoses, treatment plans, and
-            follow-up notes for each patient you've seen recently.
+          This dashboard summarizes your recent patient consultations, including diagnoses, treatments, and follow-ups, providing a quick overview of your clinical activity.
           </p>
+      <button>Record Session <img src="/icons/record-mic.svg" alt="" /></button>
         </div>
-        <img src="/icons/welcome-bar.svg" alt="" />
+        <img  src="/icons/welcome-doctor.svg" alt="" />
       </div>
       <div className="analytics__container">
         <AnalyticsCard
           icon="/icons/analytics/patient.svg"
           color="#c1e4ff"
-          count="23,490"
+          count="05"
           title="Patient encounter"
         />
          <AnalyticsCard
           icon="/icons/analytics/live.svg"
-          color="#ffb7b7"
-          count="23,490"
+          color="#ffcece"
+          count="07"
           title="Total Live session"
         />
          <AnalyticsCard
           icon="/icons/analytics/file.svg"
           color="#c8fdcb"
-          count="23,490"
+          count="10"
           title="Total File Uploaded"
         />
          <AnalyticsCard
           icon="/icons/analytics/calendar.svg"
           color="#fccfb7"
-          count="23,490"
+          count="07"
           title="Total Days"
         />
       </div>

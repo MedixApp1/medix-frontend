@@ -23,6 +23,7 @@
     opacity: 1;
     width: 30rem;
     height: 100%;
+    display: block;
   }
 
   .details {
@@ -57,7 +58,6 @@
    justify-content: space-between;
    img {
       width: 1rem;
-      margin-left: auto;
    }
    .time {
       margin-top: auto;
@@ -67,5 +67,12 @@
       font-size: .7rem;
       color: gray;
    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .encounter__card {
+    display: block;
+    height: auto;
   }
 }

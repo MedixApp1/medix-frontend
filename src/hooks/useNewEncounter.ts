@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface Note {
+export interface Note {
 	title: string;
 	sections: Section[];
  }
@@ -41,6 +41,8 @@ interface Note {
 	note: Note;
 	patientInstructions: PatientInstructions;
 	_id: string;
+	title?: string;
+	description?: string;
 	transcript: string[];
 	memeType: string;
 	fileName:string;

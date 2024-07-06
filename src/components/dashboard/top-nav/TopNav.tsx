@@ -5,7 +5,7 @@ import useCurrentUser from "../../../hooks/useCurrentUser";
 
 function TopNav() {
   const [loading] = useState(false);
-  const [isPresent, setIsPresent] = useState(false);
+  const [isPresent, setIsPresent] = useState(true);
   const handlePresentChange = () => {
     setIsPresent(!isPresent);
   };
