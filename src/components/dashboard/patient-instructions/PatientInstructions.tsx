@@ -7,7 +7,12 @@ import useNewEncounter, {
 import Cookies from "js-cookie";
 import showToast from "../../../utils/showToast";
 
-function PatientInstructions() {
+type InstructionProps ={
+  instructions?: string
+}
+
+function PatientInstructions(props: InstructionProps) {
+  console.log(props.instructions)
   const [loading, setLoading] = useState(false);
   const { currentEncounter, setCurrentEncounter } = useNewEncounter();
   useEffect(() => {
@@ -55,7 +60,7 @@ function PatientInstructions() {
   return (
     <div className="instructions__tab" id="patient-item">
       <div>
-      <h1 style={{ marginBottom: "2rem" }}>Medix</h1>
+      <h1 style={{ borderBottom: "10px solid #407BFF", marginBottom: "2rem", paddingBottom: "1rem", fontSize: "1.5rem", fontWeight: "600" }}>Medix</h1>
       {currentEncounter?.patientInstructions?.messageFromDoctor && (
         <div className="note__section" style={{marginBottom: "1.5rem"}}>
           <h4 contentEditable className="title">
@@ -68,6 +73,7 @@ function PatientInstructions() {
           </div>
         </div>
       )}
+      {props.instructions && <p className="text-sm" contentEditable>{props.instructions}</p>}
       {currentEncounter?.patientInstructions?.medication.length! > 0 && (
         <div className="note__section" style={{marginBottom: "1.5rem"}}>
           <h4 contentEditable className="title">

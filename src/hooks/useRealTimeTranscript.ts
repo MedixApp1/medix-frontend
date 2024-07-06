@@ -331,8 +331,8 @@ export default function useRealTimeTranscript() {
         console.error('Error during note generation:', response.status);
     }
 
-    const data = await response.json();
-    setPatientNote(data)
+    const data = await response.json() as {instructions: string};
+    setPatientNote(data.instructions)
     console.log("patient Note", data)
 
 

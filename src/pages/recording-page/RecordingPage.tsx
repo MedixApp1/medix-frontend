@@ -371,14 +371,13 @@ function RecordingPage() {
 		],
 	} as const;
 
-	console.log("patientNote", patientNote)
 
 	const renderActiveTab = () => {
 		if (currentTab == "transcript") {
 			return <TranscriptItems />;
 		}
 		if (currentTab == "instruction") {
-			return <PatientInstructions />;
+			return <PatientInstructions instructions={patientNote} />;
 		}
 		if (currentTab == "note") {
 			return (
@@ -390,6 +389,14 @@ function RecordingPage() {
 		}
 		return <TranscriptItems />;
 	};
+
+	const loadPatientInstructions =async ()=> {
+		showToast.loading("Loading Patient Note")
+		await generatePatientInstructions();
+		handleCurrentTab("instruction");
+		showToast.success("Success")
+		
+	}
 	return (
 		<div className="recording__page">
 			<div className="record__visual">
@@ -418,7 +425,7 @@ function RecordingPage() {
 					</p>
 					<p
 						className={currentTab === "instruction" ? "active" : ""}
-						onClick={() => handleCurrentTab("instruction")}
+						onClick={loadPatientInstructions}
 					>
 						Patient Instruction
 					</p>
