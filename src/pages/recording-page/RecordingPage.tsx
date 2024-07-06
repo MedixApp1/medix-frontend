@@ -7,12 +7,10 @@ import TranscriptItems from "./TranscriptItems";
 import NoteItem from "./NoteItem";
 import useNewEncounter, { Note } from "../../hooks/useNewEncounter";
 import showToast from "../../utils/showToast";
-import Cookies from "js-cookie";
 import html2pdf from "html2pdf.js";
 import { handleCopy } from "../../utils/handleCopy";
 import PatientInstructions from "../../components/dashboard/patient-instructions/PatientInstructions";
 import useTimer from "../../hooks/useTimer";
-import { ResponseType, EncounterType } from "../../hooks/useNewEncounter";
 import useWhisper from "@chengsokdara/use-whisper";
 import useRealTimeTranscript from "@/hooks/useRealTimeTranscript";
 
@@ -45,7 +43,8 @@ type AdudioProps = {
 	transcriptData: string[];
 	startRecording: ()=>void;
 	noteData: Note | null;
-	generateNote: ()=>void;
+	generateNote: ()=>Promise<void>;
+	generateInstructions: ()=>Promise<void>;
 }
 
 function AudioIndicator(props: AdudioProps) {
@@ -136,7 +135,8 @@ function AudioIndicator(props: AdudioProps) {
 		stopRecording();
 		resetTimer();
 		// await sendAudioToSever();
-		await props.generateNote()
+		await props.generateNote();
+		await props.generateInstructions()
 		clearInterval(intervalID);
 	};
 
@@ -175,7 +175,7 @@ function AudioIndicator(props: AdudioProps) {
 				</button>
 			) : (
 				<button disabled={isLoading} onClick={pauseAudio}>
-					Generate Transcript
+					Generate Note
 				</button>
 			)}
 		</div>
@@ -189,8 +189,10 @@ function RecordingPage() {
 	const {
 		transcriptData,
 		noteData,
+		patientNote,
 		generateNote,
 		startRecording,
+		generatePatientInstructions
 	} = useRealTimeTranscript();
 
 	const [showOptions, setShowOptions] = useState(false);
@@ -202,23 +204,8 @@ function RecordingPage() {
 		try {
 			setIsLoadingNote(true);
 			setCurrentEncounter({ note: undefined });
-			const token = Cookies.get("doctor-token");
-			const resp = await fetch(
-				`${import.meta.env.VITE_BASE_URL}/appointment/note`,
-				{
-					method: "POST",
-					headers: {
-						Authorization: `Bearer ${token}`,
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						appointmentId: currentEncounter?.appointmentId,
-						country: "Nigeria",
-					}),
-				}
-			);
-			const result = (await resp.json()) as ResponseType<EncounterType>;
-			setCurrentEncounter({ note: result.data?.note });
+			await generateNote();
+			setCurrentEncounter({ note: noteData! });
 		} catch (error) {
 			if (error instanceof Error) {
 				console.log(error);
@@ -384,6 +371,8 @@ function RecordingPage() {
 		],
 	} as const;
 
+	console.log("patientNote", patientNote)
+
 	const renderActiveTab = () => {
 		if (currentTab == "transcript") {
 			return <TranscriptItems />;
@@ -410,6 +399,7 @@ function RecordingPage() {
 					startRecording={startRecording}
 					noteData={noteData}
 					generateNote={generateNote}
+					generateInstructions={generatePatientInstructions}
 				/>
 			</div>
 			<div className="record__data">

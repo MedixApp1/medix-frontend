@@ -65,6 +65,8 @@ export default function useRealTimeTranscript() {
     note: false,
   });
 
+  const [patientNote, setPatientNote]= useState("");
+
   const [transcriptData, setTranscriptData] = useState<string[]>([]);
   const [noteData, setNoteData] = useState<NabalaNotes | null>(null);
   const [noteSections] = useState([]);
@@ -189,7 +191,7 @@ export default function useRealTimeTranscript() {
         websocket,
       });
       pcmWorker?.port.start();
-      showToast.success("Started session", { duration: Infinity });
+      showToast.success("Started Encounter", { duration: Infinity });
     } else {
       // startRecording()
       showToast.error(
@@ -308,6 +310,34 @@ export default function useRealTimeTranscript() {
     }
   };
 
+  const generatePatientInstructions = async () => {
+    console.log(noteData)
+
+    const response = await fetch('https://api.nabla.com/v1/copilot-api/server/generate_patient_instructions', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${API_KEY} `
+        },
+        body: JSON.stringify({
+            note: noteData,
+            note_locale: "en-US",
+            instructions_locale: "en-US",
+            consultation_type: "IN_PERSON"
+        })
+    });
+
+    if (!response.ok) {
+        console.error('Error during note generation:', response.status);
+    }
+
+    const data = await response.json();
+    setPatientNote(data)
+    console.log("patient Note", data)
+
+
+}
+
   const insertTranscriptItem = (data: NablaResult) => {
     if (data.object === "transcript_item") {
       const newTranscript = `[${msToTime(data.start_offset_ms)} to ${msToTime(
@@ -344,6 +374,8 @@ export default function useRealTimeTranscript() {
     noteData,
     startRecording,
     generateNote,
-    mediaRecorder: mediaRecorder
+    patientNote,
+    mediaRecorder: mediaRecorder,
+    generatePatientInstructions
   };
 }

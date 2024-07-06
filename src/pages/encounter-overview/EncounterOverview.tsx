@@ -214,7 +214,7 @@ function EncounterOverview() {
       return showToast.error("No patient Instuction");
     const element = document.getElementById("patient-item");
     var opt = {
-      margin: 1,
+      margin: 0,
       filename: "myfile.pdf",
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },

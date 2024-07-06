@@ -60,12 +60,7 @@ function EncounterCard(props: EncounterType ) {
 				>
 					{props.title}
 				</h2>
-				<p className="description">
-					Recommended to engage in exercises for mental and physical
-					health. Advised to avoid alcohol and smoking to prevent diseases
-					like cancer and liver problems\n- Suggested to do exercises at
-					least two times a day to strengthen muscles and reduce risk of
-					heart diseases
+				<p className="description">{props.description || 'Recommended to engage in exercises for mental and physical health. Advised to avoid alcohol and smoking to prevent diseases like cancer and liver problems\n- Suggested to do exercises at least two times a day to strengthen muscles and reduce risk of heart diseases'}
 				</p>
 				<div className="tags">
 					<p>General Medicine</p>

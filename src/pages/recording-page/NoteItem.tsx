@@ -56,7 +56,7 @@ function NoteItem({
 
   return (
     <div className="note__tab" id="note-item" >
-       <h1 style={{ marginBottom: "2rem", fontSize: "1.5rem", fontWeight: "600" }}>Medix</h1>
+       <h1 style={{ borderTop: "10px solid #407BFF", marginBottom: "2rem", fontSize: "1.5rem", fontWeight: "600" }}>Medix</h1>
       {currentEncounter?.note?.sections.map(
         (item) =>
           item.content.length > 0 && (

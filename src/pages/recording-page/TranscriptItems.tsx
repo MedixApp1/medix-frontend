@@ -8,7 +8,7 @@ function TranscriptItems() {
       {currentEncounter?.transcript?.map((item, index) => (
         <div key={index} className="transcript__item">
           {/* <span className="time">{msToTime(item["start_offset_ms"])}</span> */}
-          <p className="text">{item}</p>
+          <p className="text font-manrope">{item}</p>
         </div>
       ))}
     </div>

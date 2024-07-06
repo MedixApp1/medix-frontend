@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        manrope: ["Manrope"]
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
