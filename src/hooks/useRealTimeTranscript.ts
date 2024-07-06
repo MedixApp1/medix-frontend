@@ -17,6 +17,7 @@ import { sleep, msToTime } from "../utils/realtime.utils";
 // } from "../utils/nabla.utils";
 import showToast from "../utils/showToast";
 import toast from "react-hot-toast";
+import { Note } from "./useNewEncounter";
 
 const API_KEY =
   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZXJ2ZXJfVXBxMWxEajQ4WmFiIiwiY2xvdWRfcmVnaW9uIjoidXMtY2VudHJhbDEiLCJpc3MiOiJwcm9kOnNlcnZlcjpkbXMtMzU3OTZiYiIsInR5cCI6InNlcnZlcl9rZXkiLCJleHAiOjIxNDc0NzIwMDAsIm9yZ2FuaXphdGlvblN0cmluZ0lkIjoiZG1zLTM1Nzk2YmIifQ.mIWy2xGLNo96V4ZjnpxskFHumvBIFucaCYuN4vhUmiU";
@@ -41,11 +42,7 @@ type NablaResult = {
   sections: NabalaNotes;
 };
 
-type NabalaNotes = {
-  key: string;
-  title: string;
-  text: string;
-};
+type NabalaNotes = Note;
 
 export default function useRealTimeTranscript() {
   const [realTimeTranscript, setRealTimeTranscript] = useState<NablaState>({
@@ -69,7 +66,7 @@ export default function useRealTimeTranscript() {
   });
 
   const [transcriptData, setTranscriptData] = useState<string[]>([]);
-  const [noteData, setNoteData] = useState<NabalaNotes[]>([]);
+  const [noteData, setNoteData] = useState<NabalaNotes | null>(null);
   const [noteSections] = useState([]);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null)
 
@@ -205,6 +202,7 @@ export default function useRealTimeTranscript() {
   };
 
   const digest = async () => {
+    showToast.loading("Generating Note")
     const response = await fetch(
       "https://api.nabla.com/v1/copilot-api/server/digest",
       {
@@ -240,9 +238,11 @@ export default function useRealTimeTranscript() {
       return;
     }
 
-    const data = (await response.json()) as NabalaNotes[];
+    const data = (await response.json()) as {note: NabalaNotes};
     // generatedNote = data.note;
-    console.log(data);
+    console.log("generated Note", data);
+    showToast.success("Note Generated")
+    setNoteData(data.note)
 
     // data.note.sections.forEach((section) => {
     // 	const title = document.createElement('h4');
@@ -254,7 +254,7 @@ export default function useRealTimeTranscript() {
     // });
   };
 
-  const stopAudio = () => {
+  const stopAudio = async () => {
     try {
       realTimeTranscript.audioContext?.close();
     } catch (e) {
@@ -283,7 +283,7 @@ export default function useRealTimeTranscript() {
 
    //  disableAll();
 
-    stopAudio();
+    await stopAudio();
     await endConnection({ object: "end" });
 
    //  clearNoteContent();
@@ -328,7 +328,7 @@ export default function useRealTimeTranscript() {
       //   return [...newArray, data]
       // });
     } else if (data.object === "note") {
-      setNoteData((prev) => [...prev, data.sections]);
+      // setNoteData((prev) => [...prev, data.sections]);
       setIsLoading({
         transcript: false,
         note: false,

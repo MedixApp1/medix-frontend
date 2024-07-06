@@ -91,7 +91,7 @@ function EncounterOverview() {
           },
           body: JSON.stringify({
             appointmentId: currentEncounter?.appointmentId,
-            country: "Nigeria",
+           
           }),
         }
         

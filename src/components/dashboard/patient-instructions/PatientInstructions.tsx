@@ -25,11 +25,12 @@ function PatientInstructions() {
             },
             body: JSON.stringify({
               appointmentId: currentEncounter?._id,
-              country: "Nigeria",
             }),
           }
         );
+
         const result = (await resp.json()) as ResponseType<EncounterType>;
+        console.log(result)
         setCurrentEncounter({
           patientInstructions: result.data.patientInstructions,
         });

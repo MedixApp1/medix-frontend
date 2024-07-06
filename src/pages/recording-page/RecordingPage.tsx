@@ -5,7 +5,7 @@ import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 
 import TranscriptItems from "./TranscriptItems";
 import NoteItem from "./NoteItem";
-import useNewEncounter from "../../hooks/useNewEncounter";
+import useNewEncounter, { Note } from "../../hooks/useNewEncounter";
 import showToast from "../../utils/showToast";
 import Cookies from "js-cookie";
 import html2pdf from "html2pdf.js";
@@ -14,52 +14,54 @@ import PatientInstructions from "../../components/dashboard/patient-instructions
 import useTimer from "../../hooks/useTimer";
 import { ResponseType, EncounterType } from "../../hooks/useNewEncounter";
 import useWhisper from "@chengsokdara/use-whisper";
+import useRealTimeTranscript from "@/hooks/useRealTimeTranscript";
 
-interface AudioUploadResponse {
-	success: boolean;
-	data: {
-		name: string;
-		size: string;
-		mimeType: string;
-		url: string;
-		publicUrl: string;
-	};
-	message: string;
+// interface AudioUploadResponse {
+// 	success: boolean;
+// 	data: {
+// 		name: string;
+// 		size: string;
+// 		mimeType: string;
+// 		url: string;
+// 		publicUrl: string;
+// 	};
+// 	message: string;
+// }
+
+// interface AppointmentResponse {
+// 	success: boolean;
+// 	data: {
+// 		transcript: string[];
+// 		appointmentId: string;
+// 		_id: string;
+// 		createdAt: string;
+// 		updatedAt: string;
+// 		__v: number;
+// 	};
+// 	message: string;
+// }
+
+type AdudioProps = {
+	transcriptData: string[];
+	startRecording: ()=>void;
+	noteData: Note | null;
+	generateNote: ()=>void;
 }
 
-interface AppointmentResponse {
-	success: boolean;
-	data: {
-		transcript: string[];
-		appointmentId: string;
-		_id: string;
-		createdAt: string;
-		updatedAt: string;
-		__v: number;
-	};
-	message: string;
-}
-
-function AudioIndicator() {
+function AudioIndicator(props: AdudioProps) {
 	const { currentEncounter, setCurrentEncounter } = useNewEncounter();
 	const { startTimer, resetTimer, elapsedTime } = useTimer();
-	const [blob, setBlob] = useState<Blob>();
+	// const [blob, setBlob] = useState<Blob>();
+
 	const recorder = useAudioRecorder();
 	const audioRef = useRef<HTMLAudioElement>(null);
 	const [isPlaying, setIsPlaying] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
-	const [previousText, setPreviousText] = useState("");
-	const [intervalID, setIntervalID] = useState<NodeJS.Timeout>();
+	const [isLoading] = useState(false);
+	const [intervalID, _] = useState<NodeJS.Timeout>();
 
-	const { transcript, startRecording, stopRecording } = useWhisper({
+	const { transcript, stopRecording } = useWhisper({
 		apiKey: import.meta.env.VITE_OPENAI_API_KEY, // YOUR_OPEN_AI_TOKEN
 		streaming: true,
-		onDataAvailable(blob) {
-			 setBlob(blob);
-		},
-		onTranscribe(blob) {
-			return getDataONTranscript(blob)
-		},
 		timeSlice: 1_000,
 		removeSilence: true,
 		nonStop: true,
@@ -72,119 +74,60 @@ function AudioIndicator() {
 		}, // 1 second
 	});
 
-	const getDataONTranscript = async (blob: Blob) => {
-		const base64 = await new Promise<string | ArrayBuffer | null>(
-			(resolve) => {
-				const reader = new FileReader();
-				reader.onloadend = () => resolve(reader.result);
-				reader.readAsDataURL(blob!);
-			}
-		);
-		const body = JSON.stringify({ file: base64, model: "whisper-1" });
-		const headers = { "Content-Type": "application/json" };
-		const resp =await fetch("/api/whisper", {
-			headers,
-			body
-		})
 
-		const result = await resp.text();
-		console.log("result", result)
-		// you must return result from your server in Transcript format
-		return {
-			blob:blob,
-			text: result,
-		};
-	};
 
-	const addNewTranscript = () => {
-		const newItnterval = setInterval(() => {
-			let currentTranscipt = currentEncounter?.transcript;
-			console.log("currentTranscript", currentTranscipt);
-			const newWord = transcript.text?.replace(previousText, "");
-			currentTranscipt?.push(`${elapsedTime}:${newWord}`);
-			setPreviousText(transcript.text!);
-			setCurrentEncounter({ transcript: currentTranscipt });
-		}, 4000);
-		return newItnterval;
-	};
+	// const getDataONTranscript = async (blob: Blob) => {
+	// 	const base64 = await new Promise<string | ArrayBuffer | null>(
+	// 		(resolve) => {
+	// 			const reader = new FileReader();
+	// 			reader.onloadend = () => resolve(reader.result);
+	// 			reader.readAsDataURL(blob!);
+	// 		}
+	// 	);
+	// 	const body = JSON.stringify({ file: base64, model: "whisper-1" });
+	// 	const headers = { "Content-Type": "application/json" };
+	// 	const resp = await fetch("/api/whisper", {
+	// 		headers,
+	// 		body,
+	// 	});
+
+	// 	const result = await resp.text();
+	// 	console.log("result", result);
+	// 	// you must return result from your server in Transcript format
+	// 	return {
+	// 		blob: blob,
+	// 		text: result,
+	// 	};
+	// };
+
+	// const addNewTranscript = () => {
+	// 	const newItnterval = setInterval(() => {
+	// 		console.log("settng ttanscript data");
+	// 		setCurrentEncounter({ transcript: transcriptData });
+	// 	}, 2000);
+	// 	return newItnterval;
+	// };
 
 	useEffect(() => {
-		console.log("transcript", transcript);
-		console.log("encounter", currentEncounter?.transcript);
-	}, [blob]);
+		setCurrentEncounter({transcript: props.transcriptData})
+	}, [props.transcriptData]);
 
-	const sendAudioToSever = async () => {
-		console.log(blob);
-		try {
-			setIsLoading(true);
-			if (blob) {
-				showToast.loading("Uploading Audio file");
-				const token = Cookies.get("doctor-token");
-				const formData = new FormData();
-				formData.append("file", blob);
-				const resp = await fetch(
-					`${import.meta.env.VITE_BASE_URL}/appointment/audio/upload`,
-					{
-						method: "POST",
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-						body: formData,
-					}
-				);
-				const result = (await resp.json()) as AudioUploadResponse;
-				if (!resp.ok) {
-					return showToast.error(result.message);
-				}
-				showToast.loading("Generating Transcript");
-				console.log(result);
-				setCurrentEncounter({ mediaLink: result.data.publicUrl });
-				const fileUploadResp = await fetch(
-					`${import.meta.env.VITE_BASE_URL}/appointment`,
-					{
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-							Authorization: `Bearer ${token}`,
-						},
-						body: JSON.stringify({
-							url: result.data.url,
-							mimeType: result.data.mimeType,
-						}),
-					}
-				);
+	useEffect(() => {
+		setCurrentEncounter({note: props.noteData!})
+		console.log("noteDAa",props.noteData)
+	}, [props.noteData]);
 
-				const fileUploadResult =
-					(await fileUploadResp.json()) as AppointmentResponse;
-				if (!resp.ok) {
-					return showToast.error(fileUploadResult.message);
-				}
-				showToast.success(fileUploadResult.message);
-				console.log(fileUploadResult);
-				setCurrentEncounter({
-					...fileUploadResult.data,
-					memeType: result.data.mimeType,
-					fileName: result.data.name,
-					appointmentId: fileUploadResult.data._id,
-				});
-			}
-		} catch (error) {
-			if (error instanceof Error) {
-				showToast.error(error.message);
-			}
-		} finally {
-			setIsLoading(false);
-		}
-	};
+
 	const playAudio = async () => {
-		let currentTranscipt = currentEncounter?.transcript;
 
 		startTimer();
 		console.log(transcript);
-		await startRecording();
-		currentTranscipt?.push(transcript.text!);
-		setCurrentEncounter({ transcript: currentTranscipt });
-		setIntervalID(addNewTranscript());
+		// await startRecording();
+		props.startRecording();
+
+		// currentTranscipt?.push(transcript.text!);
+		// setCurrentEncounter({ transcript: currentTranscipt });
+		// setIntervalID(addNewTranscript());
 		setIsPlaying(true);
 	};
 
@@ -192,7 +135,8 @@ function AudioIndicator() {
 		setIsPlaying(false);
 		stopRecording();
 		resetTimer();
-		await sendAudioToSever();
+		// await sendAudioToSever();
+		await props.generateNote()
 		clearInterval(intervalID);
 	};
 
@@ -210,7 +154,7 @@ function AudioIndicator() {
 			)}
 			<div style={{ display: "none" }}>
 				<AudioRecorder
-					onRecordingComplete={setBlob}
+					// onRecordingComplete={setBlob}
 					recorderControls={recorder}
 				/>
 			</div>
@@ -242,6 +186,12 @@ function RecordingPage() {
 	const [currentTab, setCurrentTab] = useState<
 		"transcript" | "instruction" | "note"
 	>("transcript");
+	const {
+		transcriptData,
+		noteData,
+		generateNote,
+		startRecording,
+	} = useRealTimeTranscript();
 
 	const [showOptions, setShowOptions] = useState(false);
 	const { currentEncounter, setCurrentEncounter } = useNewEncounter();
@@ -455,7 +405,12 @@ function RecordingPage() {
 		<div className="recording__page">
 			<div className="record__visual">
 				<img src="/icons/mic.svg" alt="" />
-				<AudioIndicator />
+				<AudioIndicator
+					transcriptData={transcriptData}
+					startRecording={startRecording}
+					noteData={noteData}
+					generateNote={generateNote}
+				/>
 			</div>
 			<div className="record__data">
 				<div className="tabs">
