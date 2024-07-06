@@ -56,17 +56,17 @@ function NoteItem({
 
   return (
     <div className="note__tab" id="note-item" >
-       <h1 style={{ borderTop: "10px solid #407BFF", marginBottom: "2rem", fontSize: "1.5rem", fontWeight: "600" }}>Medix</h1>
+       <h1 style={{ borderBottom: "10px solid #407BFF", marginBottom: "2rem", paddingBottom: "1rem", fontSize: "1.5rem", fontWeight: "600" }}>Medix</h1>
       {currentEncounter?.note?.sections.map(
         (item) =>
           item.content.length > 0 && (
             <div className="note__section"style={{marginBottom: "1.5rem"}} >
-              <h4 contentEditable className="title">
+              <h4 style={{fontWeight: "700"}} contentEditable className="title">
                 {item.title}
               </h4>
               <div className="note__content">
                 {item.content.map((content) => (
-                  <p contentEditable> {content}</p>
+                  <p contentEditable style={{fontSize: ".85rem"}}> {content}</p>
                 ))}
               </div>
             </div>
